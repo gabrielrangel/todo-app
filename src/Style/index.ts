@@ -25,4 +25,11 @@ export default createGlobalStyle`
       justify-content: center;
       align-items: center;
     }
+    
+    .selection-none {
+      user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -webkit-user-select: none;
+    }
 `
