@@ -2,15 +2,20 @@ import styled from "styled-components";
 import {FcGoogle} from "react-icons/fc"
 
 import Logo from "../../Components/Logo"
+import {useAuth} from "../../Context/useAuth";
 
 function Login () {
+    const {signInWithGoogle} = useAuth()
     return (
         <Wrapper>
             <Logo/>
             <div>Simple todo app</div>
 
             <Div>
-                <Button className={"selection-none"}>
+                <Button
+                    className={"selection-none"}
+                    onClick={signInWithGoogle}
+                >
                     <FcGoogle/>
                     <div>Sign in with Google</div>
                 </Button>

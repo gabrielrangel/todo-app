@@ -7,6 +7,7 @@ import Style from "./Style"
 import Login from "./Pages/Login";
 
 import "./Style/fonts.scss"
+import {AuthContextProvider} from "./Context/useAuth";
 
 function App() {
     const prefersDarkMode:Boolean = window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -14,8 +15,10 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
-            <Style/>
-            <Login/>
+            <AuthContextProvider>
+                <Style/>
+                <Login/>
+            </AuthContextProvider>
         </ThemeProvider>
     );
 }
