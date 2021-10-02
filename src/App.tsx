@@ -1,25 +1,29 @@
-import React, {useState} from 'react';
-import {ThemeProvider} from "styled-components";
+import React from 'react';
+import {BrowserRouter, Switch, Route} from "react-router-dom";
 
-import {darkTheme, lightTheme} from "./Style/theme";
+//Providers
+import {AuthContextProvider} from "./Context/AuthContext";
+import {ThemeContextProvider} from "./Context/ThemeContext";
 
-import Style from "./Style"
+//Stylesheet
+import "./Style/index.scss"
+
+//Pages
 import Login from "./Pages/Login";
-
-import "./Style/fonts.scss"
-import {AuthContextProvider} from "./Context/useAuth";
+import Home from "./Pages/Home";
 
 function App() {
-    const prefersDarkMode:Boolean = window.matchMedia("(prefers-color-scheme: dark)").matches
-    const [theme, setTheme] = useState(prefersDarkMode ? darkTheme : lightTheme)
-
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeContextProvider>
             <AuthContextProvider>
-                <Style/>
-                <Login/>
+                <BrowserRouter>
+                    <Switch>
+                        <Route exact path={"/"}><Login/></Route>
+                        <Route path={"/home"}><Home/></Route>
+                    </Switch>
+                </BrowserRouter>
             </AuthContextProvider>
-        </ThemeProvider>
+        </ThemeContextProvider>
     );
 }
 

@@ -5,7 +5,7 @@ declare module 'styled-components' {
     export interface DefaultTheme extends Theme {}
 }
 
-export default createGlobalStyle`
+export const GlobalStyle =  createGlobalStyle`
     * {
       box-sizing: border-box;
       padding: 0;
