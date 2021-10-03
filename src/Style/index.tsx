@@ -5,7 +5,7 @@ declare module 'styled-components' {
     export interface DefaultTheme extends Theme {}
 }
 
-export default createGlobalStyle`
+export const GlobalStyle =  createGlobalStyle`
     * {
       box-sizing: border-box;
       padding: 0;
@@ -13,8 +13,8 @@ export default createGlobalStyle`
     }
     
     body {
-      background-image: ${({theme}) => theme.bodyGradient};
-      background-color: ${({theme}) => theme.bodyBackground};
+      background-image: ${({theme}) => theme.gradient};
+      background-color: ${({theme}) => theme.primaryColor};
     }
     
     #root {
@@ -24,5 +24,16 @@ export default createGlobalStyle`
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+    
+    .selection-none {
+      user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -webkit-user-select: none;
+    }
+    
+    * {
+      color: ${({theme}) => theme.contrast};
     }
 `
