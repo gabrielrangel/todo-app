@@ -7,11 +7,11 @@ export type Theme = {
 }
 
 export const lightTheme:Theme = {
-    gradient: "linear-gradient(138deg, rgba(52,55,107,1) 0%, rgba(0,0,0,1) 100%)",
-    primaryColor: "rgb(52, 55, 107)",
-    secondaryColor: "rgb(255, 185, 58)",
-    emphasis: "rgb(225, 137, 220)",
-    contrast: "rbg(255, 255, 255)"
+    gradient: "linear-gradient(138deg, rgba(221, 228, 238, 1) 0%, rgba(255,255,255,1) 100%)",
+    primaryColor: "#34376B",
+    secondaryColor: "#FFB93A",
+    emphasis: "#E189DC",
+    contrast: "#000",
 }
 
 export const darkTheme:Theme = {
@@ -19,5 +19,5 @@ export const darkTheme:Theme = {
     primaryColor: "#34376B",
     secondaryColor: "#FFB93A",
     emphasis: "#E189DC",
-    contrast: "#FFFFFF",
+    contrast: "#FFF",
 }

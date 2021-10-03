@@ -4,7 +4,8 @@ import {ThemeProvider} from "styled-components";
 import {GlobalStyle} from "../Style";
 
 type ThemeContextValue = {
-    darkModeToggle: VoidFunction
+    darkModeToggle: VoidFunction,
+    isDarkMode: boolean
 }
 
 type ThemeContextProviderProps = {
@@ -27,7 +28,7 @@ export function ThemeContextProvider(props:ThemeContextProviderProps) {
     },[isDarkMode])
 
     return (
-        <ThemeContext.Provider value={{darkModeToggle}}>
+        <ThemeContext.Provider value={{darkModeToggle, isDarkMode}}>
             <ThemeProvider theme={theme}>
                 <GlobalStyle/>
                 {props.children}

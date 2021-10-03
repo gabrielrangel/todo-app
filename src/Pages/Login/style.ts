@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Card from "../../Components/Card";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -9,7 +10,6 @@ export const Wrapper = styled.div`
   
   justify-content: flex-start;
   align-items: center;
-  
   
   .illustration {
     height: 50vh;
@@ -28,24 +28,20 @@ export const Wrapper = styled.div`
   }
 `
 
-export const Main = styled.main`
+export const Main = styled(Card)`
   min-height: 40vh;
   width: 100vw;
 
-  background-color: ${({theme}) => theme.primaryColor}50;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-
-  display: flex;
   flex-direction: column;
   justify-content: center;
-
-  padding: 10px;
   
   @media (orientation: landscape) {
     width: 50vw;
-    border-radius: 20px;
-    margin: 0;
+  }
+  
+  @media (orientation: portrait) {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
   }
 `
 
@@ -59,9 +55,17 @@ export const Button = styled.button`
   height: 50px;
 
   border-radius: 15px;
-  border: solid 1px #f8f8f8;  
+  border: solid 1px ${({theme}) => theme.primaryColor};
+  
 
-  background-color: ${({theme}) => theme.primaryColor}50;
+  background-color: transparent;
+
+  transition: 1s;
+  
+  * {
+    transition: 1s;
+    color: ${({theme}) => theme.primaryColor};
+  }
   
   cursor: pointer;
   
@@ -79,7 +83,7 @@ export const Button = styled.button`
 `
 
 export const Footer = styled.footer`
-  background-color: ${({theme}) => theme.primaryColor}50;
+  background-color: ${({theme}) => theme.primaryColor}20;
   padding: 15px;
   width: 100vw;
   
