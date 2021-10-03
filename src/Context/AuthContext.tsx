@@ -16,7 +16,8 @@ type User = {
 
 type AuthContextValue = {
     user: User,
-    signInWithGoogle: VoidFunction
+    signInWithGoogle: VoidFunction,
+    logout: VoidFunction
 }
 
 export const AuthContext = createContext({} as AuthContextValue)
@@ -24,9 +25,9 @@ export const AuthContext = createContext({} as AuthContextValue)
 export function AuthContextProvider(props: AuthContextProviderProps) {
     const [user, setUser] = useState({} as User)
 
-    useEffect(() => {
-        const auth = getAuth()
+    const auth = getAuth()
 
+    useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 const {uid, displayName, photoURL} = user
@@ -35,22 +36,30 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
                 setUser({})
             }
         })
-    }, [])
+    }, [auth])
 
-    const signInWithGoogle = () => {
-        const provider = new GoogleAuthProvider()
-        const auth = getAuth()
+    const value: AuthContextValue = {
+        signInWithGoogle: () => {
+            const provider = new GoogleAuthProvider()
 
-        signInWithPopup(auth, provider)
-            .then(({user}) => {
-                const {uid, displayName, photoURL} = user
-                setUser({uid, displayName, photoURL})
-            })
-            .catch(() => setUser({}))
+            signInWithPopup(auth, provider)
+                .then(({user}) => {
+                    const {uid, displayName, photoURL} = user
+                    setUser({uid, displayName, photoURL})
+                })
+                .catch(() => setUser({}))
+        },
+
+        logout: () => {
+            auth.signOut()
+        },
+
+        user
     }
 
+
     return (
-        <AuthContext.Provider value={{user, signInWithGoogle}}>
+        <AuthContext.Provider value={value}>
             {props.children}
         </AuthContext.Provider>
     )

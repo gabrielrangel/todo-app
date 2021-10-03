@@ -2,29 +2,25 @@ import {Redirect} from "react-router-dom"
 import {FcGoogle} from "react-icons/fc"
 
 import {useAuth} from "../../Hooks/useAuth";
-import {useTheme} from "../../Hooks/useTheme";
 
 // Components
 import Logo from "../../Components/Logo"
-import {Button, Div, Wrapper} from "./styles"
+import {Button, Footer, Main, Wrapper} from "./styles"
+import illustration from "../../Assets/img/Wavy_Bus-03_Single-04.png"
 
 function Login() {
     const {signInWithGoogle, user} = useAuth()
-    const {darkModeToggle} = useTheme()
 
     if (user.uid) {
-        return (
-            <Redirect to={"/home"}/>
-        )
+        return <Redirect to={"/home"}/>
     } else {
         return (
             <Wrapper>
-                <Logo/>
-                <div>Simple todo app</div>
 
-                <button onClick={darkModeToggle}>Dark mode toggle</button>
+                <img src={illustration} alt="Homem colando post-it num quadro" className={"illustration"}/>
 
-                <Div>
+                <Main>
+                    <Logo/>
                     <Button
                         className={"selection-none"}
                         onClick={signInWithGoogle}
@@ -32,7 +28,10 @@ function Login() {
                         <FcGoogle/>
                         <div>Sign in with Google</div>
                     </Button>
-                </Div>
+                </Main>
+                <Footer>
+                    <a href='https://www.freepik.com/vectors/character' rel={"noreferrer"} target={"_blank"}>Character vector created by vectorjuice - www.freepik.com</a>
+                </Footer>
             </Wrapper>
         )
     }

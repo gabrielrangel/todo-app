@@ -1,13 +1,14 @@
 import {useAuth} from "../../Hooks/useAuth";
+import {Redirect} from "react-router-dom";
 
 function Home(){
-    const {user} = useAuth()
+    const {user, logout} = useAuth()
 
-    return(
-        <>
-            {user.photoURL && <img src={user.photoURL} alt={"avatar"}/> }
-        </>
-    )
+    if (user.uid){
+        return <button onClick={logout}>Logout</button>
+    } else {
+        return <Redirect to={"/"}/>
+    }
 }
 
 export default Home
