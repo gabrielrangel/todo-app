@@ -12,3 +12,11 @@ html {
 a {
   text-decoration: none;
 }
+
+@media (min-width: 600px), (min-height: 600px) {
+  html {font-size: 4vmin;}
+}
+
+@media (min-width: 750px), (min-height: 750px) {
+  html {font-size: 3vmin;}
+}

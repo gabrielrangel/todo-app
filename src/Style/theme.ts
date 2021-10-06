@@ -11,13 +11,13 @@ export const lightTheme:Theme = {
     primaryColor: "#34376B",
     secondaryColor: "#FFB93A",
     emphasis: "#E189DC",
-    contrast: "#000",
+    contrast: "#000000",
 }
 
 export const darkTheme:Theme = {
     gradient: "linear-gradient(138deg, rgba(52,55,107,1) 0%, rgba(0,0,0,1) 100%)",
-    primaryColor: "#34376B",
-    secondaryColor: "#FFB93A",
+    secondaryColor: "#34376B",
+    primaryColor: "#FFB93A",
     emphasis: "#E189DC",
-    contrast: "#FFF",
+    contrast: "#FFFFFF  ",
 }

@@ -1,4 +1,4 @@
-import styled, {StyledComponentProps} from "styled-components";
+import styled from "styled-components";
 import {useTheme} from "../Hooks/useTheme";
 
 type LogoProps = {
@@ -8,10 +8,12 @@ type LogoProps = {
 const Style = styled.strong<LogoProps>`
   font-family: "Lobster", sans-serif;
   font-size: 3.5rem;
-  
+
   text-align: center;
+  padding: 10px;
+  line-height: 3.5rem;
   
-  color: ${({isDarkMode, theme}) => isDarkMode ? theme.secondaryColor : theme.primaryColor};
+  color: ${({theme}) => theme.primaryColor};
 `
 
 function Logo() {

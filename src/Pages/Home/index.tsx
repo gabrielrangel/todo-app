@@ -1,9 +1,9 @@
 import {useAuth} from "../../Hooks/useAuth";
 import {Redirect} from "react-router-dom";
 
-import {Wrapper, Header, Main, Footer} from "./style"
+import {Wrapper, User, Main, Footer} from "./style"
 import avatar from "../../Assets/img/avatar.png"
-import Logo from "../../Components/Logo";
+import {Logo} from "./style";
 import Card from "../../Components/Card";
 
 function Home(){
@@ -12,16 +12,19 @@ function Home(){
     if (user.uid){
         return (
             <Wrapper>
-                <Header>
-                    <Logo/>
-                    <div className="user-info">
-                        <div><img src={user.photoURL || avatar} alt={user.displayName || ""}/></div>
-                        <div>{user.displayName}</div>
-                        <button onClick={logout}>Sair</button>
-                    </div>
-                </Header>
+
+                <Logo/>
+
+                <User>
+                    <div><img src={user.photoURL || avatar} alt={user.displayName || ""}/></div>
+                    <div>{user.displayName}</div>
+                    <button onClick={logout}>Sair</button>
+                </User>
 
                 <Main>
+                    <h1>Todas as Listas</h1>
+                    <Card/>
+                    <Card/>
                     <Card/>
                 </Main>
 

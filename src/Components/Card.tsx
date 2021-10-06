@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export default styled.div`
-  background-color: ${({theme}) => theme.primaryColor}20;
-  border-radius: 20px;
+  background-color: #34376B20;
+  border-radius: 50px;
 
   display: flex;
   

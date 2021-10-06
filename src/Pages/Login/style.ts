@@ -2,46 +2,53 @@ import styled from "styled-components";
 import Card from "../../Components/Card";
 
 export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  
-  min-height: 100vh;
-  
-  justify-content: flex-start;
-  align-items: center;
+  display: grid;
+  grid-template:
+  "illustration" 60vh
+  "login" 40vh
+  "footer" auto
+  / 1fr;
+  width: 100vw;
   
   .illustration {
-    height: 50vh;
-    width: auto;
-    margin: 5vh 0;
+    grid-area: illustration;
+    width: 100%;
+    margin: auto;
   }
   
   @media (orientation: landscape) {
-    flex-direction: row;
-    justify-content: center;
-    
+    grid-template:
+    "illustration login" 100vh
+    "footer footer" auto
+    / 40vw 1fr;
+
     .illustration {
-      height: 80vh;
-      margin: 10vh 0;
+      height: auto;
+      width: 100%;
     }
   }
 `
 
 export const Main = styled(Card)`
-  min-height: 40vh;
-  width: 100vw;
-
+  grid-area: login;
+  width: 100%;
+  
+  display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   
-  @media (orientation: landscape) {
-    width: 50vw;
+  margin: 0 auto;
+
+
+  @media(orientation: portrait) {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
   
-  @media (orientation: portrait) {
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
+  @media(orientation: landscape) {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
   }
 `
 
@@ -83,9 +90,10 @@ export const Button = styled.button`
 `
 
 export const Footer = styled.footer`
-  background-color: ${({theme}) => theme.primaryColor}20;
-  padding: 15px;
-  width: 100vw;
+  grid-area: footer;
+  background-color: #34376B10;
+  width: 100%;
+  padding: 20px 0;
   
   * {
     font-size: .7rem;
