@@ -39,33 +39,30 @@ export const User = styled.div`
 
 export const Main = styled.main`
   grid-area: main;
-  margin: 0 1vh;
-  content: "";
+  padding: 10px;
   
-  justify-content: flex-start;
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  align-content: flex-start;
-  flex-wrap: wrap;
-  gap: 1vmin;
+  flex-flow: column;
+  gap: 20px;
   
-  h1 {
-    font-family: "Lato", sans-serif;
-    font-size: 1.5rem;
-    color: ${({theme}) => theme.primaryColor};
-    padding: 2vh 0 1vh;
-    width: 100%;
-    flex-grow: 0;
-  }
-  
-  
-  @media (orientation: landscape) and (min-width: 730px) {
+  @media (orientation: landscape) {
     flex-direction: row;
+    flex-wrap: wrap;
+    
+    > * {
+      flex-basis: 40%;
+      flex-grow: 1;
+    }
+    
+    h1 {
+      flex-basis: 100%;
+    }
   }
   
-  * {
-    flex-grow: 1;
+  @media (orientation: portrait) {
+    h1 {
+      width: 100%;
+    }
   }
 `
 

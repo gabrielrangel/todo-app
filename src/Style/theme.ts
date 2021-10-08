@@ -1,5 +1,4 @@
 export type Theme = {
-    gradient:string,
     primaryColor:string,
     secondaryColor:string,
     emphasis:string,
@@ -7,17 +6,15 @@ export type Theme = {
 }
 
 export const lightTheme:Theme = {
-    gradient: "linear-gradient(138deg, rgba(221, 228, 238, 1) 0%, rgba(255,255,255,1) 100%)",
-    primaryColor: "#34376B",
-    secondaryColor: "#FFB93A",
-    emphasis: "#E189DC",
+    primaryColor: "#eae8e5",
+    secondaryColor: "#ffffff",
+    emphasis: "#2b0549",
     contrast: "#000000",
 }
 
 export const darkTheme:Theme = {
-    gradient: "linear-gradient(138deg, rgba(52,55,107,1) 0%, rgba(0,0,0,1) 100%)",
-    secondaryColor: "#34376B",
-    primaryColor: "#FFB93A",
-    emphasis: "#E189DC",
+    primaryColor: "#6E6F7F",
+    secondaryColor: "#b0a1be",
+    emphasis: "#2b0549",
     contrast: "#FFFFFF  ",
 }

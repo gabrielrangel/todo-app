@@ -13,7 +13,7 @@ const Style = styled.strong<LogoProps>`
   padding: 10px;
   line-height: 3.5rem;
   
-  color: ${({theme}) => theme.primaryColor};
+  color: ${({theme}) => theme.emphasis};
 `
 
 function Logo() {

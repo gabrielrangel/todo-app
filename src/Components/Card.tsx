@@ -1,15 +1,19 @@
 import styled from "styled-components";
 
-export default styled.div`
-  background-color: #34376B20;
-  border-radius: 50px;
+type CardProps = {
+    alpha?: string
+}
+
+export default styled.div<CardProps>`
+  background-color: ${({theme}) => theme.emphasis}${({alpha}) => alpha || "FF" };
+  border-radius: 25px;
 
   display: flex;
+  flex-direction: column;
   
   content: "";
   
-  min-height: 50px;
-  min-width: 50px;
-
   padding: 10px;
+  
+  gap: 10px;
 `

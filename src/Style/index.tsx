@@ -13,7 +13,6 @@ export const GlobalStyle =  createGlobalStyle`
     }
     
     body {
-      background-image: ${({theme}) => theme.gradient};
       background-color: ${({theme}) => theme.primaryColor};
     }
     
