@@ -10,10 +10,10 @@ export default styled.div<CardProps>`
 
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
   
   content: "";
-  
   padding: 10px;
-  
   gap: 10px;
 `

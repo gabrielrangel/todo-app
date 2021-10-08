@@ -6,9 +6,9 @@ export type Theme = {
 }
 
 export const lightTheme:Theme = {
-    primaryColor: "#eae8e5",
-    secondaryColor: "#ffffff",
-    emphasis: "#2b0549",
+    primaryColor: "#FAFAFA",
+    secondaryColor: "#FFFFFF",
+    emphasis: "#FF9966",
     contrast: "#000000",
 }
 

@@ -14,21 +14,23 @@ type GrowingCardProps = {
     children?: ReactNode
 }
 
-const Card = styled(StyledCard)<GrowingCardProps>`
-  animation: ${({collapsed}) => collapsed ? "shrink" : "grow"} 1s ease-in normal;
+export const Card = styled(StyledCard)<GrowingCardProps>`
+   animation: grow 1s ease-in normal;
   
   ${({collapsed, theme}) => collapsed ? `
     background-color: ${theme.emphasis};
-  ` : `
-    flex-basis: 100%;
-  `}
+  ` : ``}
   
   .header {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    align-content: stretch;
     align-items: center;
-    align-content: center;
-    width: 100%;
+    gap: 10px;
+    
+    button {
+      flex: 0;
+    }
   }
 
   @keyframes grow {
@@ -39,20 +41,13 @@ const Card = styled(StyledCard)<GrowingCardProps>`
       transform: scale(1);
     }
   }
-  @keyframes shrink {
-    from {
-      transform: scale(0);
-    }
-    to {
-      transform: scale(1);
-    }
-  }
 `
 
-const Style = styled.div`
+export const GrowingCardWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  
 `
 
 const Button = styled.button<ButtonProps>`
@@ -81,7 +76,7 @@ export function GrowingCard(props:GrowingCardProps) {
 
     return(
         <ListContextProvider>
-            <Style>
+            <GrowingCardWrapper>
                 <Card key={String(collapsedState)} collapsed={collapsedState} alpha={props.alpha}>
                     <div className="header">
                         {collapsedState || header}
@@ -89,7 +84,7 @@ export function GrowingCard(props:GrowingCardProps) {
                     </div>
                     {collapsedState || children}
                 </Card>
-            </Style>
+            </GrowingCardWrapper>
         </ListContextProvider>
     )
 }

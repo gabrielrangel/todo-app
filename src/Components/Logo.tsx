@@ -10,10 +10,9 @@ const Style = styled.strong<LogoProps>`
   font-size: 3.5rem;
 
   text-align: center;
-  padding: 10px;
   line-height: 3.5rem;
   
-  color: ${({theme}) => theme.emphasis};
+  color: ${({theme}) => theme.contrast};
 `
 
 function Logo() {

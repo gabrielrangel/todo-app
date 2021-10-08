@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import LogoComponent from "../../Components/Logo";
+import Card from "../../Components/Card";
+import {GrowingCardWrapper} from "./Components/GrowingCard";
 
 export const Wrapper = styled.div`
   display: grid;
@@ -11,6 +13,7 @@ export const Wrapper = styled.div`
   
   min-height: 100vh;
   width: 100vw;
+  padding: 10px 5px 0 5px;
 `
 
 export const Logo = styled(LogoComponent)`
@@ -22,12 +25,18 @@ export const User = styled.div`
   
   display: flex;
   justify-content: flex-end;
-  align-items: center;
+  align-items: flex-end;
   gap: 10px;
+  
+  * {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+  }
+  
 
   img {
     border-radius: 100px;
-    height: 1rem;
+    height: 1.5rem;
   }
 
   button {
@@ -42,28 +51,50 @@ export const Main = styled.main`
   padding: 10px;
   
   display: flex;
-  flex-flow: column;
-  gap: 20px;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
   
-  @media (orientation: landscape) {
-    flex-direction: row;
-    flex-wrap: wrap;
-    
-    > * {
-      flex-basis: 40%;
-      flex-grow: 1;
-    }
-    
-    h1 {
-      flex-basis: 100%;
-    }
+  h1 {
+    font-family: "Lato", sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    padding: 20px 0;
+    flex-basis: 100%;
   }
   
-  @media (orientation: portrait) {
-    h1 {
-      width: 100%;
-    }
+  > * {
+    flex: 1;
+    width: 100%;
   }
+  
+  > *:last-child {
+    flex: 2;
+  }
+  
+    @media (orientation: landscape), (min-width: 550px) {
+      > ${Card}, ${GrowingCardWrapper} {
+        flex-basis: 40%;
+        min-width: 40%;
+      }
+    }
+    
+    @media (orientation: landscape), (min-width: 730px) {
+      > ${Card}, ${GrowingCardWrapper} {
+        flex-basis: 30%;
+        min-width: 30%;
+      }
+    }
+    
+    @media (orientation: landscape), (min-width: 1100px) {
+      > ${Card}, ${GrowingCardWrapper} {
+        flex-basis: 20%;
+        min-width: 20%;
+      }
+    }
+  
 `
 
 export const Footer = styled.footer`
