@@ -1,21 +1,14 @@
+import {User} from "firebase/auth";
 import {createContext, ReactNode, useEffect, useState} from "react";
 
-import {auth} from "../Services/Firebase"
-
-const {GoogleAuthProvider, getAuth, signInWithPopup, onAuthStateChanged} = auth
+import {authStateListener, logout, signInWithGoogle} from "../Services/Auth"
 
 type AuthContextProviderProps = {
     children?: ReactNode
 }
 
-export type User = {
-    uid?: string,
-    displayName?: string | null,
-    photoURL?: string | null
-}
-
 type AuthContextValue = {
-    user: User,
+    user: User | null,
     signInWithGoogle: VoidFunction,
     logout: VoidFunction
 }
@@ -23,43 +16,16 @@ type AuthContextValue = {
 export const AuthContext = createContext({} as AuthContextValue)
 
 export function AuthContextProvider(props: AuthContextProviderProps) {
-    const [user, setUser] = useState({} as User)
-
-    const auth = getAuth()
+    const [user, setUser] = useState({} as User | null)
 
     useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const {uid, displayName, photoURL} = user
-                setUser({uid, displayName, photoURL})
-            } else {
-                setUser({})
-            }
+        authStateListener((user) => {
+            setUser(user ? user : null)
         })
-    }, [auth])
-
-    const value: AuthContextValue = {
-        signInWithGoogle: () => {
-            const provider = new GoogleAuthProvider()
-
-            signInWithPopup(auth, provider)
-                .then(({user}) => {
-                    const {uid, displayName, photoURL} = user
-                    setUser({uid, displayName, photoURL})
-                })
-                .catch(() => setUser({}))
-        },
-
-        logout: () => {
-            auth.signOut()
-        },
-
-        user
-    }
-
+    }, [])
 
     return (
-        <AuthContext.Provider value={value}>
+        <AuthContext.Provider value={{signInWithGoogle, logout, user}}>
             {props.children}
         </AuthContext.Provider>
     )

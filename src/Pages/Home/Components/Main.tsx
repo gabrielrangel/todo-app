@@ -46,7 +46,6 @@ const MainStyle = styled.main`
       flex-basis: calc((100% - 30px)/4);
     }
   }
-  }
 `
 
 export function Main (props: MainProps) {

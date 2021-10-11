@@ -11,7 +11,7 @@ import illustration from "../../Assets/img/Wavy_Bus-03_Single-04.png"
 function Login() {
     const {signInWithGoogle, user} = useAuth()
 
-    if (user.uid) {
+    if (user) {
         return <Redirect to={"/home"}/>
     } else {
         return (

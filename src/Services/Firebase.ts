@@ -2,6 +2,8 @@ import * as firebase from "firebase/app";
 
 import * as auth from 'firebase/auth'
 
+import * as database from 'firebase/database'
+
 const firebaseConfig = {
     apiKey: "AIzaSyCzK_PeC4ViAIpVP0LHj1RQTX9Z2dpkeIY",
     authDomain: "todo-9f7e9.firebaseapp.com",
@@ -13,4 +15,4 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig)
 
-export { firebase, auth };
+export { firebase, auth, database };

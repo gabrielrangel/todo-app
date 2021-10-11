@@ -1,16 +1,17 @@
+import {User} from "firebase/auth"
+
 import Card from "../../../Components/Card";
 import styled from "styled-components";
 import avatar from "../../../Assets/img/avatar.png";
-import {User as UserType} from "../../../Context/AuthContext";
 
 type HeaderProps = {
     title: string;
-    user: UserType;
+    user: User;
     logout:VoidFunction;
 }
 
 type UserProps = {
-    user: UserType;
+    user: User;
     logout: VoidFunction;
 }
 
@@ -68,12 +69,12 @@ const HeaderStyle = styled.header`
   }
 `
 
-const User = ({user, logout}:UserProps) => (
-        <UserStyle>
-            <div><img src={user.photoURL || avatar} alt={user.displayName || ""}/></div>
-            <div>{user.displayName}</div>
-            <button onClick={logout}>Sair</button>
-        </UserStyle>
+const UserInfo = ({user, logout}:UserProps) => (
+    <UserStyle>
+        <div><img src={user.photoURL || avatar} alt={user.displayName || ""}/></div>
+        <div>{user.displayName}</div>
+        <button onClick={logout}>Sair</button>
+    </UserStyle>
 )
 
 export function Header(props:HeaderProps) {
@@ -81,7 +82,7 @@ export function Header(props:HeaderProps) {
         <HeaderStyle>
             <Card>
                 <h1>{props.title}</h1>
-                <User user={props.user} logout={props.logout}/>
+                <UserInfo user={props.user} logout={props.logout}/>
             </Card>
         </HeaderStyle>
     )

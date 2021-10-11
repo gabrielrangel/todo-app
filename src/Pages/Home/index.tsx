@@ -25,18 +25,14 @@ const NewList = () => (
 function Home(){
     const {user, logout} = useAuth()
 
-    if (user.uid){
+    if (user){
         return (
             <Wrapper>
-
                 <Nav/>
-
                 <Header title={"Todas as Listas"} user={user} logout={logout}/>
-                
                 <Main>
                     <NewList/>
                 </Main>
-
                 <Footer/>
             </Wrapper>
         )
