@@ -1,19 +1,28 @@
 import styled from "styled-components";
 
 type CardProps = {
-    alpha?: string
+    alpha?: string,
+    divider?: boolean
 }
 
 export default styled.div<CardProps>`
-  background-color: ${({theme}) => theme.emphasis}${({alpha}) => alpha || "FF" };
+  background-color: ${({theme}) => theme.secondaryColor};
   border-radius: 25px;
 
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
+  flex-wrap: wrap!important;
   
   content: "";
-  padding: 10px;
-  gap: 10px;
+  
+  * + *:not(:last-child) {
+    : after {
+    content: "";
+    width: 100%;
+    border: solid 1px ${({theme}) => theme.primaryColor};
+  }
+  }
+}
 `

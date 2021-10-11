@@ -18,8 +18,16 @@ export const Card = styled(StyledCard)<GrowingCardProps>`
    animation: grow 1s ease-in normal;
   
   ${({collapsed, theme}) => collapsed ? `
-    background-color: ${theme.emphasis};
-  ` : ``}
+    padding:0;
+    border:none;
+    margin: 15px;
+    
+    button {
+      padding: 10px;
+    }
+  ` : `
+    height:100%;
+  `}
   
   .header {
     display: flex;
@@ -47,7 +55,8 @@ export const GrowingCardWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  
+  padding: 0;
+  margin: 0;
 `
 
 const Button = styled.button<ButtonProps>`
@@ -59,8 +68,12 @@ const Button = styled.button<ButtonProps>`
     
     border-radius: 100px;
     background-color: ${({theme}) => theme.emphasis};
+  
+    : hover {
+      opacity: 80%;
+    }
     
-    border: solid 1px ${({theme}) => theme.primaryColor};
+    border: none;
     transition: 1s;
     
     ${({collapsed}) => collapsed ? "" : "transform: rotate(45deg);"}

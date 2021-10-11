@@ -7,12 +7,11 @@ type LogoProps = {
 
 const Style = styled.strong<LogoProps>`
   font-family: "Lobster", sans-serif;
-  font-size: 3.5rem;
+  font-size: 5rem;
 
   text-align: center;
-  line-height: 3.5rem;
   
-  color: ${({theme}) => theme.contrast};
+  color: ${({theme}) => theme.emphasis};
 `
 
 function Logo() {

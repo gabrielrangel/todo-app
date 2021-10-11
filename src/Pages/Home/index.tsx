@@ -1,13 +1,14 @@
 import {useAuth} from "../../Hooks/useAuth";
 import {Redirect} from "react-router-dom";
 
-import {Wrapper, User, Main, Footer} from "./style"
-import avatar from "../../Assets/img/avatar.png"
-import {Logo} from "./style";
+import {Wrapper, Footer} from "./style"
 
 import {GrowingCard} from "./Components/GrowingCard";
 import {ListField} from "./Components/ListField";
 import Card from "../../Components/Card";
+import {Header} from "./Components/Header";
+import {Nav} from "./Components/Nav";
+import {Main} from "./Components/Main"
 
 const NewTodo = () => (
     <GrowingCard alpha={"10"}>
@@ -29,17 +30,11 @@ function Home(){
         return (
             <Wrapper>
 
-                <Logo/>
+                <Nav/>
 
-                <User>
-                    <div><img src={user.photoURL || avatar} alt={user.displayName || ""}/></div>
-                    <div>{user.displayName}</div>
-                    <button onClick={logout}>Sair</button>
-                </User>
-
+                <Header title={"Todas as Listas"} user={user} logout={logout}/>
+                
                 <Main>
-                    <h1>Todas as Listas</h1>
-
                     <Card alpha={"10"}>
                         <ListField type={"list"} value={{title:"Lista 1"}}/>
                         <ListField type={"todo"} value={{title:"Todo 1"}}/>
@@ -75,12 +70,9 @@ function Home(){
 
                     <NewList/>
 
-
                 </Main>
 
-                <Footer>
-                    <a href="https://www.freepik.com/vectors/business">Business vector created by freepik - www.freepik.com</a>
-                </Footer>
+                <Footer/>
             </Wrapper>
         )
     } else {

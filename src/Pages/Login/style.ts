@@ -61,7 +61,7 @@ export const Button = styled.button`
   height: 50px;
 
   border-radius: 15px;
-  border: solid 1px ${({theme}) => theme.primaryColor};
+  border: solid 1px ${({theme}) => theme.emphasis};
   
 
   background-color: transparent;
@@ -70,7 +70,7 @@ export const Button = styled.button`
   
   * {
     transition: 1s;
-    color: ${({theme}) => theme.primaryColor};
+    color: ${({theme}) => theme.emphasis};
   }
   
   cursor: pointer;
@@ -81,9 +81,9 @@ export const Button = styled.button`
   }
   
   :hover {
-    border: solid 1px ${({theme})=>theme.secondaryColor};
+    border: solid 1px ${({theme})=>theme.emphasis};
     * {
-      color: ${({theme})=>theme.secondaryColor};
+      color: ${({theme})=>theme.emphasis};
     }
   }
 `

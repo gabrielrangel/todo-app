@@ -8,7 +8,7 @@ type AuthContextProviderProps = {
     children?: ReactNode
 }
 
-type User = {
+export type User = {
     uid?: string,
     displayName?: string | null,
     photoURL?: string | null
