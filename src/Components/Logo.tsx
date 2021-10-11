@@ -18,7 +18,7 @@ function Logo() {
     const {isDarkMode} = useTheme()
 
     return (
-        <Style className={"selection-none"} isDarkMode={isDarkMode}>Todo</Style>
+        <Style className={"selection-none"} isDarkMode={isDarkMode}>To-do!</Style>
     )
 }
 

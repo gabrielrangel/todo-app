@@ -7,46 +7,46 @@ type MainProps = {
 
 const MainStyle = styled.main`
   grid-area: main;
-  margin: 10px;
+  margin: 50px 10px;
   
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: flex-start;
-  align-content: stretch;
+  align-content: flex-start;
   gap: 10px;
   flex-wrap: wrap;
   
-  
   > * {
-    flex: 1;
+    flex: 0;
     flex-basis: 100%;
+  }
+  
+  :after {
+    content: "";
+    align-self: stretch;
+    min-width: calc(100%/4);
+    max-width: 100%;
+    flex: 10;
   }
   
   @media (min-width: 660px) {
     > * {
-      flex-basis: 40%;
-    }
-    > *:not(:last-child) {
-      max-width: calc(100%/2);
+      flex-basis: calc((100% - 10px)/2);
     }
   }
   
   @media(min-width: 760px) {
     > * {
-      flex-basis: 30%;
+      flex-basis: calc((100% - 20px)/3);
       }
-    > *:not(:last-child) {
-      max-width: calc(100%/3);
-    }  
   }
     
   @media (min-width: 1024px) {
     > * {
-      flex-basis: 20%;
+      flex-basis: calc((100% - 30px)/4);
     }
-    > *:not(:last-child) {
-      max-width: calc(100%/4);
-    }
+  }
+  }
 `
 
 export function Main (props: MainProps) {

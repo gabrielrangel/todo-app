@@ -27,6 +27,7 @@ export const Card = styled(StyledCard)<GrowingCardProps>`
     }
   ` : `
     height:100%;
+    width:100%;
   `}
   
   .header {
@@ -38,6 +39,18 @@ export const Card = styled(StyledCard)<GrowingCardProps>`
     
     button {
       flex: 0;
+    }
+    
+    > *:first-child {
+      flex:1;
+    }
+    
+    > *:not(:first-child){
+      flex: 0;
+    }
+    
+    > *:last-child {
+      margin:15px;
     }
   }
 
@@ -55,8 +68,7 @@ export const GrowingCardWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0;
-  margin: 0;
+  align-self: stretch;
 `
 
 const Button = styled.button<ButtonProps>`
@@ -76,7 +88,12 @@ const Button = styled.button<ButtonProps>`
     border: none;
     transition: 1s;
     
-    ${({collapsed}) => collapsed ? "" : "transform: rotate(45deg);"}
+    ${({collapsed, theme}) => collapsed ? `
+        margin: 0!important;    
+    ` : `
+        transform: rotate(45deg);
+        background-color: ${theme.emphasisAlt};
+    `}
     
     * {
       color: ${({theme}) => theme.primaryColor};
