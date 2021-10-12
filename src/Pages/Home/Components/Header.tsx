@@ -1,8 +1,10 @@
 import {User} from "firebase/auth"
+import {newList} from "../../../Services/Database";
 
 import Card from "../../../Components/Card";
 import styled from "styled-components";
 import {TiPlus} from "react-icons/ti"
+import {useAuth} from "../../../Hooks/useAuth";
 
 type HeaderProps = {
     title: string;
@@ -38,7 +40,7 @@ const UserStyle = styled.div`
       font-weight: 900;
     }
 
-    select
+    select,
     * {
       color: white;
       font-weight: 900;
@@ -90,6 +92,9 @@ const UserStyle = styled.div`
 const HeaderStyle = styled.header`
   grid-area: header;
   align-self: stretch;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 20px;
 
   margin: 20px;
   flex: 0;
@@ -184,11 +189,16 @@ const UserInfo = ({user, logout}: UserProps) => (
 )
 
 export function Header(props: HeaderProps) {
+    const {user} = useAuth()
+    const handleNewList = () => {
+        user && newList(user.uid)
+    }
+
     return (
         <HeaderStyle>
             <Card>
                 <h1>{props.title}</h1>
-                <button><TiPlus/></button>
+                <button onClick={handleNewList}><TiPlus/></button>
                 <UserInfo user={props.user} logout={props.logout}/>
             </Card>
         </HeaderStyle>
