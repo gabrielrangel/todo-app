@@ -2,10 +2,9 @@ import styled from "styled-components";
 import {TiPlus} from "react-icons/ti"
 import StyledCard from "../../../Components/Card";
 import React, {ReactNode, useState} from "react";
-import {ListContextProvider} from "../../../Context/ListContext";
 
 type ButtonProps = {
-    collapsed:boolean
+    collapsed: boolean
 }
 
 type GrowingCardProps = {
@@ -15,8 +14,8 @@ type GrowingCardProps = {
 }
 
 export const Card = styled(StyledCard)<GrowingCardProps>`
-   animation: grow 1s ease-in normal;
-  
+  animation: grow 1s ease-in normal;
+
   ${({collapsed, theme}) => collapsed ? `
     padding:0;
     border:none;
@@ -29,28 +28,27 @@ export const Card = styled(StyledCard)<GrowingCardProps>`
     height:100%;
     width:100%;
   `}
-  
   .header {
     display: flex;
     justify-content: flex-start;
     align-content: stretch;
     align-items: center;
     gap: 10px;
-    
+
     button {
       flex: 0;
     }
-    
+
     > *:first-child {
-      flex:1;
+      flex: 1;
     }
-    
-    > *:not(:first-child){
+
+    > *:not(:first-child) {
       flex: 0;
     }
-    
+
     > *:last-child {
-      margin:15px;
+      margin: 15px;
     }
   }
 
@@ -72,49 +70,43 @@ export const GrowingCardWrapper = styled.div`
 `
 
 const Button = styled.button<ButtonProps>`
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    
-    border-radius: 100px;
-    background-color: ${({theme}) => theme.emphasis};
-  
-    : hover {
-      opacity: 80%;
-    }
-    
-    border: none;
-    transition: 1s;
-    
-    ${({collapsed, theme}) => collapsed ? `
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+
+  border-radius: 100px;
+  background-color: ${({theme}) => theme.emphasis};: hover {
+  opacity: 80%;
+} border: none;
+  transition: 1s;
+
+  ${({collapsed, theme}) => collapsed ? `
         margin: 0!important;    
     ` : `
         transform: rotate(45deg);
         background-color: ${theme.emphasisAlt};
     `}
-    
-    * {
-      color: ${({theme}) => theme.primaryColor};
-    }
+  * {
+    color: ${({theme}) => theme.primaryColor};
+  }
 `
 
-export function GrowingCard(props:GrowingCardProps) {
+export function GrowingCard(props: GrowingCardProps) {
     const [collapsedState, setCollapsedState] = useState<boolean>(props.collapsed || true)
     const [header, ...children] = React.Children.toArray(props.children)
 
-    return(
-        <ListContextProvider>
-            <GrowingCardWrapper>
-                <Card key={String(collapsedState)} collapsed={collapsedState} alpha={props.alpha}>
-                    <div className="header">
-                        {collapsedState || header}
-                        <Button collapsed={collapsedState} onClick={() => setCollapsedState(prevState => !prevState)}><TiPlus/></Button>
-                    </div>
-                    {collapsedState || children}
-                </Card>
-            </GrowingCardWrapper>
-        </ListContextProvider>
+    return (
+        <GrowingCardWrapper>
+            <Card key={String(collapsedState)} collapsed={collapsedState} alpha={props.alpha}>
+                <div className="header">
+                    {collapsedState || header}
+                    <Button collapsed={collapsedState}
+                            onClick={() => setCollapsedState(prevState => !prevState)}><TiPlus/></Button>
+                </div>
+                {collapsedState || children}
+            </Card>
+        </GrowingCardWrapper>
     )
 }
