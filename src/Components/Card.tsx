@@ -13,12 +13,11 @@ export default styled.div<CardProps>`
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
-  flex-wrap: wrap!important;
-  
+  flex-wrap: wrap !important;
+
   content: "";
-  
-  * + *:not(:last-child) {
-    : after {
+
+  * + *:not(:last-child) {: after {
     content: "";
     width: 100%;
     border: solid 1px ${({theme}) => theme.primaryColor};

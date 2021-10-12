@@ -3,12 +3,12 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   display: grid;
   grid-template:
-  "nav" auto
+  "logo" auto
   "header" auto
   "main" 1fr
   "footer" auto
   /100vw;
-  
+
   justify-items: stretch;
 
   min-height: 100vh;
@@ -16,7 +16,7 @@ export const Wrapper = styled.div`
 
   @media (min-width: 760px) {
     grid-template:
-    "nav header" auto
+    "logo header" auto
     "main main" 1fr
     "footer footer" auto
     /auto 1fr;
@@ -25,11 +25,11 @@ export const Wrapper = styled.div`
 
 export const Footer = styled.footer`
   grid-area: footer;
-  
+
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   * {
     text-align: center;
     font-size: 1.4rem;

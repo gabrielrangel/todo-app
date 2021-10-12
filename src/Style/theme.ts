@@ -8,19 +8,19 @@ export type Theme = {
 }
 
 export const lightTheme:Theme = {
-    primaryColor: "rgb(232, 235, 244)",
-    secondaryColor: "rgb(255, 255, 255)",
-    emphasis: "rgb(114,69,255)",
-    emphasisAlt: "rgb(231, 0, 120)",
-    contrast: "rgb(40, 42, 46)",
-    contrastAlt: "rgb(118,116,140)",
+    primaryColor: "#e8ebf4",
+    secondaryColor: "#ffffff",
+    emphasis: "#7245ff",
+    emphasisAlt: "#e70078",
+    contrast: "#282a2e",
+    contrastAlt: "#76748c",
 }
 
 export const darkTheme:Theme = {
-    primaryColor: "rgb(29, 29, 31)",
-    secondaryColor: "rgb(62, 61, 64)",
-    emphasis: "rgb(114,69,255)",
-    emphasisAlt: "rgb(255, 226, 79)",
-    contrast: "rgb(255, 255, 255)",
-    contrastAlt: "rgb(123,129,143)",
+    primaryColor: "#1d1d1f",
+    secondaryColor: "#3e3d40",
+    emphasis: "#7245ff",
+    emphasisAlt: "#ffe24f",
+    contrast: "#ffffff",
+    contrastAlt: "#7b818f",
 }

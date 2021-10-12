@@ -10,8 +10,10 @@ const Style = styled.strong<LogoProps>`
   font-size: 5rem;
 
   text-align: center;
-  
+
   color: ${({theme}) => theme.emphasis};
+
+  grid-area: logo;
 `
 
 function Logo() {

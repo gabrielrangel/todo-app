@@ -6,9 +6,9 @@ import {Footer, Wrapper} from "./style"
 import {GrowingCard} from "./Components/GrowingCard";
 import {ListField} from "./Components/ListField";
 import {Header} from "./Components/Header";
-import {Nav} from "./Components/Nav";
 import {Main} from "./Components/Main"
 import {UserDataContextProvider} from "../../Context/UserDataContext";
+import Logo from "../../Components/Logo";
 
 const NewTodo = () => (
     <GrowingCard alpha={"10"}>
@@ -30,7 +30,7 @@ function Home() {
         return (
             <UserDataContextProvider user={user}>
                 <Wrapper>
-                    <Nav/>
+                    <Logo/>
                     <Header title={"Todas as Listas"} user={user} logout={logout}/>
                     <Main/>
                     <Footer/>

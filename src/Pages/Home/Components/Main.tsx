@@ -5,7 +5,7 @@ import {ListField} from "./ListField";
 
 const MainStyle = styled.main`
   grid-area: main;
-  margin: 50px 10px;
+  margin: 10px;
 
   display: flex;
   justify-content: flex-start;
@@ -17,14 +17,6 @@ const MainStyle = styled.main`
   > * {
     flex: 0;
     flex-basis: 100%;
-  }
-
-  :after {
-    content: "";
-    align-self: stretch;
-    min-width: calc(100% / 4);
-    max-width: 100%;
-    flex: 10;
   }
 
   @media (min-width: 660px) {
@@ -51,7 +43,7 @@ export function Main() {
     return (
         <MainStyle>
             {state && state.map(({id, title}) => (
-                <Card>
+                <Card key={id}>
                     <ListField key={id} type={"list"} value={{title}}/>
                 </Card>
             ))}
