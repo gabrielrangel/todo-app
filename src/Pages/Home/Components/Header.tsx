@@ -5,6 +5,7 @@ import Card from "../../../Components/Card";
 import styled from "styled-components";
 import {TiPlus} from "react-icons/ti"
 import {useAuth} from "../../../Hooks/useAuth";
+import Button from "../../../Components/Button";
 
 type HeaderProps = {
     title: string;
@@ -19,149 +20,70 @@ type UserProps = {
 
 const UserStyle = styled.div`
   height: 50px;
-  width: 50px;
 
-  > * {
-    width: 100%;
-  }
-
-  .photo {
-    border-radius: 100px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    cursor: pointer;
-    min-width: 50px;
-
-    * {
-      color: white;
-      font-weight: 900;
-    }
-
-    select,
-    * {
-      color: white;
-      font-weight: 900;
-    }
-
-    &, > * {
-      width: 100%;
-    }
-  }
-
-  .dropdown * {
-    text-align: center;
-  }
-
-  > ${Card} {
+  .dropdown {
     display: none;
-    flex-direction: column;
-    justify-content: stretch;
-    position: relative;
-    z-index: 1;
-    background-color: ${({theme}) => theme.secondaryColor};
-    overflow: hidden;
-    width: 150px;
-    right: 100px;
-
-    * {
-      font-size: 1rem;
-      font-weight: 700;
-      padding: 5px;
-    }
-
-    > div:not(:first-child) {
-      width: 100%;
-    }
-
-    button {
-      border: none;
-      background-color: transparent;
-      width: 100%;
-      cursor: pointer;
-    }
   }
 
   :hover .dropdown {
     display: flex;
+    align-items: stretch;
+    width: 150px;
+    position: relative;
+    right: 100px;
+    z-index: 1;
+    gap: 5px;
+    padding: 10px 5px 5px 5px;
+
+    * {
+      font-size: 1rem;
+      width: 100%;
+    }
+
+    > *:first-child {
+      margin: 5px 0;
+      font-weight: 600;
+      text-align: center;
+    }
   }
 `
 
 const HeaderStyle = styled.header`
   grid-area: header;
+
+  top: 20px;
+  margin: 20px;
   align-self: stretch;
+
   position: sticky;
   position: -webkit-sticky;
-  top: 20px;
-
-  margin: 20px;
-  flex: 0;
 
   display: flex;
   align-items: center;
 
+  * {
+    font-family: "Lato", sans-serif;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+  }
+
   > ${Card} {
     width: 100%;
-    padding: 5px 10px;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
+    padding: 5px 10px;
     gap: 5px;
 
-    button {
-      border-radius: 100px;
-      border: none;
+    *:first-child {
+      flex: 1;
+    }
 
-      display: flex;
-      justify-content: center;
-      align-content: center;
-      align-items: center;
-
-      background-color: ${({theme}) => theme.emphasis};
+    > *:not(:first-child) {
+      flex: 0;
       min-width: 50px;
       min-height: 50px;
-      cursor: pointer;
-      color: white !important;
-      transition: .5s;
-
-      * {
-        color: ${({theme}) => theme.primaryColor};
-      }
-
-      :after {
-        display: none;
-      }
-
-      :hover {
-        background-color: ${({theme}) => theme.emphasis}dd;
-      }
-    }
-
-    h1 {
-      font-family: "Lato", sans-serif;
-      font-size: 1.3rem;
-      flex: 1;
-
-      @media (min-width: 375px) {
-        font-size: 1.8rem;
-      }
-
-      @media (min-width: 400px) {
-        font-size: 2rem;
-      }
-    }
-
-    > * {
-      flex: 0;
-    }
-
-    * {
-      user-select: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
-      -moz-user-select: none;
     }
   }
 
@@ -169,19 +91,17 @@ const HeaderStyle = styled.header`
 
 const UserInfo = ({user, logout}: UserProps) => (
     <UserStyle>
-        <button className="photo">
+        <Button className="photo">
             {user.photoURL
                 ? <img src={user.photoURL} alt={user.displayName || ""}/>
-                : <div>{user.displayName
-                    ? user.displayName.charAt(0).toUpperCase()
-                    : "?"} </div>
+                : <div>{user.displayName ? user.displayName.charAt(0).toUpperCase() : "?"} </div>
             }
-        </button>
+        </Button>
 
         <Card className="dropdown">
             <div>{user.displayName}</div>
             <div>
-                <button onClick={logout}>Sair</button>
+                <Button onClick={logout}>Sair</Button>
             </div>
         </Card>
 
@@ -198,7 +118,7 @@ export function Header(props: HeaderProps) {
         <HeaderStyle>
             <Card>
                 <h1>{props.title}</h1>
-                <button onClick={handleNewList}><TiPlus/></button>
+                <Button onClick={handleNewList}><TiPlus/></Button>
                 <UserInfo user={props.user} logout={props.logout}/>
             </Card>
         </HeaderStyle>

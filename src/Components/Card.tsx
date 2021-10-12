@@ -6,8 +6,8 @@ type CardProps = {
 }
 
 export default styled.div<CardProps>`
-  background-color: ${({theme}) => theme.secondaryColor};
-  border-radius: 25px;
+  background-color: ${({theme}) => theme.secondaryColor}DD;
+  border-radius: 10px;
 
   display: flex;
   flex-direction: column;
@@ -17,11 +17,14 @@ export default styled.div<CardProps>`
 
   content: "";
 
-  * + *:not(:last-child) {: after {
-    content: "";
-    width: 100%;
-    border: solid 1px ${({theme}) => theme.primaryColor};
-  }
-  }
+  ${({divider, theme}) => divider && `
+    * + *:not(:last-child) {:
+      after {
+        content: "";
+        width: 100%;
+        border: solid 1px ${theme.primaryColor};
+      }
+    }
+  `}
 }
 `
