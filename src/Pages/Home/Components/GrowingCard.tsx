@@ -86,7 +86,7 @@ const Button = styled.button<ButtonProps>`
         margin: 0!important;    
     ` : `
         transform: rotate(45deg);
-        background-color: ${theme.emphasisAlt};
+        background-color: ${theme.emphasis};
     `}
   * {
     color: ${({theme}) => theme.primaryColor};
