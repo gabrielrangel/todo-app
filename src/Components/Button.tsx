@@ -12,9 +12,18 @@ export default styled.button`
   align-content: center;
 
   background-color: ${({theme}) => theme.emphasis};
-  min-width: 50px;
-  min-height: 50px;
+  min-width: 30px;
+  min-height: 30px;
   transition: .5s;
+  padding: 5px;
+
+  &.danger {
+    background-color: ${({theme}) => theme.danger};
+
+    :hover {
+      background-color: ${({theme}) => theme.danger}cc;
+    }
+  }
 
   &, * {
     height: 100%;
@@ -23,6 +32,6 @@ export default styled.button`
   }
 
   :hover {
-    background-color: ${({theme}) => theme.emphasis}dd;
+    background-color: ${({theme}) => theme.emphasis}cc;
   }
 `
