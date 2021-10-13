@@ -1,11 +1,11 @@
 import {User} from "firebase/auth"
-import {newList} from "../../../Services/Database";
 
 import Card from "../../../Components/Card";
 import styled from "styled-components";
 import {TiPlus} from "react-icons/ti"
 import {useAuth} from "../../../Hooks/useAuth";
 import Button from "../../../Components/Button";
+import {newRecord} from "../../../Services/Database";
 
 type HeaderProps = {
     title: string;
@@ -111,7 +111,7 @@ const UserInfo = ({user, logout}: UserProps) => (
 export function Header(props: HeaderProps) {
     const {user} = useAuth()
     const handleNewList = () => {
-        user && newList(user.uid)
+        user &&  newRecord(user.uid, {type: "list"})
     }
 
     return (

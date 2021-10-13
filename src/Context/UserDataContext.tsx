@@ -1,14 +1,14 @@
 import {User} from "firebase/auth";
 import {createContext, Dispatch, ReactNode, useEffect, useReducer} from "react";
 
-import {List, ListLoaderValReturn, listsLoader, newList} from "../Services/Database"
+import {DatabaseRecord, List, ListLoaderValReturn, listsLoader, newRecord} from "../Services/Database"
 import {useAuth} from "../Hooks/useAuth";
 
 type UserDataContextProps = {
     children: ReactNode,
     user: User | null
 }
-type State = Array<List>
+type State = Array<DatabaseRecord<List>>
 
 type Action = {
     value: State
@@ -20,18 +20,18 @@ type UserDataContextValue = {
 }
 
 function reducer(state: State, action: Action) {
+    const newState = [...state]
     const {value} = action
     value.forEach((newListValue) => {
-        const listIndex = state.findIndex(({id}) => id === newListValue.id)
+        const listIndex = newState.findIndex(({ListId}) => ListId === newListValue.ListId)
 
         if (listIndex === -1) {
-            state.push(newListValue)
+            newState.push(newListValue)
         } else {
-            state[listIndex] = newListValue
+            newState[listIndex] = newListValue
         }
     })
-    console.log(state)
-    return state
+    return newState
 }
 
 const initialState: State = []
@@ -43,21 +43,21 @@ export function UserDataContextProvider({children}: UserDataContextProps) {
     const {user} = useAuth()
 
     useEffect(() => {
-        if (user) {
+        if (user && user.uid) {
             const [unsubscribe] = listsLoader(user.uid, (snapshot) => {
                 const val: ListLoaderValReturn = snapshot.val()
                 if (val) {
-                    const parsedVal = Object.entries(val).map(([id, {title, todos = [], created}]) => {
-                        return {id, title, todos, created} as List
+                    const parsedVal = Object.entries(val).map(([id, {title, value:todos, created}]) => {
+                        return {ListId: id, title, todos, created} as DatabaseRecord<List>
                     })
                     dispatch({value: parsedVal})
                 } else {
-                    newList(user.uid)
+                    newRecord(user.uid, {type: "list"})
                 }
             })
             return unsubscribe
         }
-    }, [user])
+    }, [user, dispatch])
 
     return (
         <UserDataContext.Provider value={{state, dispatch}}>

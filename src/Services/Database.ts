@@ -1,40 +1,32 @@
 import {DataSnapshot} from "firebase/database"
 import {database} from "./Firebase"
 
-const {getDatabase, ref, onValue, push, off} = database
+const {getDatabase, ref, onValue, push, off, get, child, update} = database
 
-interface DatabaseRecord {
-    id?: string,
+export interface DatabaseRecord<Type> {
+    ListId?: string,
     title: string,
     created: number
+    value?: Type
 }
 
-export interface Todo extends DatabaseRecord {
+interface Todo {
     done: boolean
 }
 
-export interface List extends DatabaseRecord {
+export interface List {
     todos: Array<Todo>
 }
 
-export type ListLoaderValReturn = Record<string, List>
+export type ListLoaderValReturn = Record<string, DatabaseRecord<List>>
 
 type NewRecordOptions = {
+    listId?: string,
+    todoId?: string,
     type: "todo" | "list",
     title?: string,
     todos?: Array<Todo>,
-    done?: boolean
-}
-
-export function newRecord({type, title = "", todos = [], done = false}: NewRecordOptions) {
-    const record: DatabaseRecord = {title, created: Date.now()}
-
-    switch (type) {
-        case "todo":
-            return {...record, done} as Todo
-        case "list":
-            return {...record, todos} as List
-    }
+    done?: boolean,
 }
 
 export function listsLoader(userId: string, cb: (snapshot: DataSnapshot) => void) {
@@ -43,16 +35,25 @@ export function listsLoader(userId: string, cb: (snapshot: DataSnapshot) => void
     return [off(listRef), onValue(listRef, cb)]
 }
 
-export function newList(userId: string, title: string = "", todos: Array<Todo> = []) {
+export function newRecord(userId: string, {type, listId, title = "", todos = [], done = false}: NewRecordOptions) {
+    const value = type === "list" ? {todos} as List : {done} as Todo
+    const record: DatabaseRecord<typeof value> = {
+        title, created: Date.now(), value
+    }
+
     const db = getDatabase()
-    const listRef = ref(db, `users/${userId}/lists`)
-    const newList = newRecord({type: "list", title, todos})
-    return push(listRef, newList)
+    const recordRef = ref(db, `users/${userId}/lists${type === 'todo' ? `/${listId}/todos` : ""}`)
+    return push(recordRef, record)
 }
 
-export function newTodo(userId: string, listId: string, {title = "", done = false}: NewRecordOptions) {
-    const db = getDatabase()
-    const todoRef = ref(db, `users/${userId}/lists/${listId}/todos`)
-    const newTodo = newRecord({type: "todo", title, done})
-    return push(todoRef, newTodo)
+export async function deleteList(userId: string, listId: string) {
+    const dbRef = ref(getDatabase())
+    const path = `users/${userId}/lists`
+    const snapshot = await get(child(dbRef, path))
+    if (snapshot.exists()) {
+        const updates: Record<string, any> = {}
+        updates[path] = snapshot.val()
+        delete updates[path][listId]
+        update(dbRef, updates)
+    }
 }
