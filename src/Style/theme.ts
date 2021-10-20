@@ -21,9 +21,9 @@ export const lightTheme: Theme = {
 export const darkTheme: Theme = {
     primaryColor: "#1d1d1f",
     secondaryColor: "#3e3d40",
-    emphasis: "#2300d1",
-    selected: "#00ecbf",
-    danger: "#ffe24f",
+    emphasis: "#00ecbf",
+    selected: "#2300d1",
+    danger: "#e70078",
     contrast: "#ffffff",
     contrastAlt: "#7b818f",
 }

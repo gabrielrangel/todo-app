@@ -6,6 +6,7 @@ import styled from "styled-components";
 import {useAuth} from "../../../Hooks/useAuth";
 import {newRecord} from "../../../Services/Database";
 import {useTheme} from "../../../Hooks/useTheme";
+import Button from "../../../Components/Button";
 
 type HeaderProps = {
     title: string;
@@ -48,31 +49,11 @@ const HeaderStyle = styled.header`
     -webkit-user-select: none;
   }
 
-  button {
-    border: none;
-    background-color: ${({theme}) => theme.primaryColor};
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border-radius: 100px;
-    transition: 1s;
-
-    &, * {
-      color: ${({theme}) => theme.contrast}
-    }
-
-    :hover {
-      background-color: ${({theme}) => theme.secondaryColor};
-    }
-  }
 `
 
 const UserInfo = ({user, logout}: UserProps) => (
     user && <UserStyle>
-        <button onClick={logout}><IoMdLogOut/></button>
+        <Button onClick={logout}><IoMdLogOut/></Button>
         <img src={user?.photoURL || ""} alt={user?.displayName || "avatar"}/>
     </UserStyle>
 )
@@ -87,7 +68,7 @@ export function Header(props: HeaderProps) {
 
     return (
         <HeaderStyle>
-            <button onClick={darkModeToggle}>{isDarkMode ? <MdOutlineLightMode/> : <MdOutlineDarkMode/>}</button>
+            <Button onClick={darkModeToggle}>{isDarkMode ? <MdOutlineLightMode/> : <MdOutlineDarkMode/>}</Button>
             <UserInfo user={props.user} logout={props.logout}/>
         </HeaderStyle>
     )

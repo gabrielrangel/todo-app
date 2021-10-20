@@ -9,7 +9,7 @@ type LogoProps = {
 const Style = styled.div<LogoProps>`
   flex-direction: row;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   border-radius: 0;
   padding: 10px 20px;
   gap: 10px;
@@ -27,6 +27,8 @@ const Style = styled.div<LogoProps>`
     font-weight: 700;
     color: ${({theme}) => theme.emphasis};
     visibility: hidden;
+    text-shadow: ${({theme}) => theme.selected} 3px 3px;
+    font-size: 2rem;
   }
 
   img {

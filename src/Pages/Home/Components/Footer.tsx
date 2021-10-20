@@ -24,8 +24,9 @@ export function Footer() {
         <Style>
             <div>Designed with <IoIosHeartEmpty/> by Gabriel Rangel</div>
             <div>Icons made by <a href="https://www.flaticon.com/authors/icongeek26"
-                                  title="Icongeek26">Icongeek26</a> from <a href="https://www.flaticon.com/"
-                                                                            title="Flaticon">www.flaticon.com</a></div>
+                                  title="Icongeek26"
+                                  target="_blank">Icongeek26</a> from <a href="https://www.flaticon.com/"
+                                                                         title="Flaticon">www.flaticon.com</a></div>
         </Style>
     )
 }

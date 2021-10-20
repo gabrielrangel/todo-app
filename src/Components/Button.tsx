@@ -1,37 +1,44 @@
 import styled from "styled-components";
 
-export default styled.button`
-  border-radius: 100px;
+type ButtonProps = {
+    fill?: "primaryColor" | "emphasis" | "danger"
+    selected?: boolean
+}
+
+export default styled.button<ButtonProps>`
   display: flex;
-  justify-content: center;
   align-items: center;
-  border: none;
-  cursor: pointer;
-  overflow: hidden;
+  justify-content: center;
 
-  align-content: center;
-
-  background-color: ${({theme}) => theme.emphasis};
-  min-width: 30px;
-  min-height: 30px;
-  transition: .5s;
   padding: 5px;
+  border: none;
+  border-radius: 100px;
 
-  &.danger {
-    background-color: ${({theme}) => theme.danger};
+  background-color: ${({fill, theme}) => fill && theme[fill] || theme.primaryColor};
 
-    :hover {
-      background-color: ${({theme}) => theme.danger}cc;
-    }
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  text-align: left;
+  color: ${({theme, fill}) => !fill || fill === "primaryColor" ? theme.contrast : "white"};
+
+  cursor: pointer;
+
+  transition: 1s;
+
+  &[value="selected"] {
+    background-color: ${({theme, fill}) => fill === "primaryColor" ? theme.secondaryColor : theme.selected};
+    cursor: default;
   }
 
-  &, * {
-    height: 100%;
-    color: white !important;
-    font-weight: 900;
+  :not([value="selected"]):hover {
+    background-color: ${
+            ({theme, fill}) =>
+                    !fill || fill === "primaryColor" ? theme.secondaryColor : `${theme[fill]}50`};
   }
 
-  :hover {
-    background-color: ${({theme}) => theme.emphasis}cc;
+  img,
+  svg {
+    max-height: 30px;
+    margin: 5px;
   }
 `

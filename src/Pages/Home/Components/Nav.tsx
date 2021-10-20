@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+import {MdListAlt, MdTaskAlt} from "react-icons/md"
+
+import Button from "../../../Components/Button";
+
 const Style = styled.aside`
   grid-area: nav;
 
@@ -10,29 +14,6 @@ const Style = styled.aside`
     li {
       display: flex;
       margin: 5px 0;
-
-      button {
-        background-color: ${({theme}) => theme.secondaryColor};
-        cursor: pointer;
-        width: 100%;
-        border: 0;
-        border-top-right-radius: 50px;
-        border-bottom-right-radius: 50px;
-        font-family: "Lato", sans-serif;
-        font-weight: 700;
-        text-align: left;
-        padding: 10px;
-        transition: 1s;
-
-        &[value="selected"] {
-          background-color: ${({theme}) => theme.selected}10;
-          cursor: default;
-        }
-
-        :not([value="selected"]):hover {
-          background-color: ${({theme}) => theme.selected}05;
-        }
-      }
     }
   }
 
@@ -48,10 +29,10 @@ export function Nav() {
         <Style>
             <ul>
                 <li>
-                    <button value={"selected"}>Listas</button>
+                    <Button fill={"primaryColor"} selected value={"selected"}><MdListAlt/>Listas</Button>
                 </li>
                 <li>
-                    <button>Tarefas</button>
+                    <Button fill={"primaryColor"}><MdTaskAlt/>Tarefas</Button>
                 </li>
             </ul>
         </Style>

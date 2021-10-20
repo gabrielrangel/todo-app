@@ -106,7 +106,7 @@ export function Main() {
         <MainStyle>
             <div className="header">
                 <h1>Todas as Listas</h1>
-                <button><TiPlus/></button>
+                <Button><TiPlus/></Button>
             </div>
             {
                 state.map((value) => (
@@ -118,10 +118,11 @@ export function Main() {
                                 onChange={(e: FormEvent<HTMLInputElement>) => handleEditTitle(e.currentTarget.value, value)}
                                 onBlur={() => handleUpdateList(user?.uid, value.id)}
                             />
-                            <Button className={"danger"}
+                            <Button fill={"danger"}
                                     onClick={() => user && value.id && deleteList(user.uid, value.id)}
                             > <TiTrash/> </Button>
-                            <Button onClick={() => user && handleNewTodo(user.uid, value.id)}><TiPlus/></Button>
+                            <Button fill={"emphasis"}
+                                    onClick={() => user && handleNewTodo(user.uid, value.id)}><TiPlus/></Button>
                         </div>
                     </Card>
                 ))
