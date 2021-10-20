@@ -4,10 +4,9 @@ export const Wrapper = styled.div`
   display: grid;
   grid-template:
     "logo header" auto
-    "nav nav" auto
-    "main main" 1fr
+    "nav main" 1fr
     "footer footer" auto
-    /10vw 1fr;
+    /auto 1fr;
 
   justify-items: stretch;
 

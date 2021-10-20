@@ -10,16 +10,25 @@ const Style = styled.aside`
   ul {
     margin: 20px 0;
     display: flex;
+    flex-direction: column;
 
     li {
       display: flex;
       margin: 5px 0;
-    }
-  }
 
-  @media (min-width: 760px) {
-    ul {
-      flex-direction: column;
+      ${Button} {
+        width: 100%;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+
+        > *:not(:first-child) {
+          display: none;
+
+          @media (min-width: 750px) {
+            display: block;
+          }
+        }
+      }
     }
   }
 `
@@ -29,10 +38,10 @@ export function Nav() {
         <Style>
             <ul>
                 <li>
-                    <Button fill={"primaryColor"} selected value={"selected"}><MdListAlt/>Listas</Button>
+                    <Button fill={"primaryColor"} selected value={"selected"}><MdListAlt/> <span>Listas</span></Button>
                 </li>
                 <li>
-                    <Button fill={"primaryColor"}><MdTaskAlt/>Tarefas</Button>
+                    <Button fill={"primaryColor"}><MdTaskAlt/><span>Tarefas</span></Button>
                 </li>
             </ul>
         </Style>

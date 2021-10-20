@@ -9,17 +9,22 @@ export default styled.button<ButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
+  align-content: center;
+  
+  min-width: 2vmax;
+  min-height: 2vmax;
 
-  padding: 5px;
   border: none;
   border-radius: 100px;
 
   background-color: ${({fill, theme}) => fill && theme[fill] || theme.primaryColor};
 
-  font-family: "Lato", sans-serif;
-  font-weight: 700;
-  text-align: left;
-  color: ${({theme, fill}) => !fill || fill === "primaryColor" ? theme.contrast : "white"};
+  span {
+    font-family: "Lato", sans-serif;
+    font-weight: 700;
+    text-align: left;
+    color: ${({theme, fill}) => !fill || fill === "primaryColor" ? theme.contrast : "white"};
+  }
 
   cursor: pointer;
 
@@ -38,7 +43,12 @@ export default styled.button<ButtonProps>`
 
   img,
   svg {
-    max-height: 30px;
-    margin: 5px;
+    min-width: 1vmax;
+    flex: 0 0 30px;
+    margin: 10px;
+  }
+
+  * {
+    flex: 1;
   }
 `

@@ -9,10 +9,16 @@ type LogoProps = {
 const Style = styled.div<LogoProps>`
   flex-direction: row;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+
   border-radius: 0;
-  padding: 10px 20px;
   gap: 10px;
+
+  @media (min-width: 700px) {
+    justify-content: flex-start;
+  }
 
   * {
     user-select: none;
@@ -26,20 +32,19 @@ const Style = styled.div<LogoProps>`
     font-family: "Lato", sans-serif;
     font-weight: 700;
     color: ${({theme}) => theme.emphasis};
-    visibility: hidden;
+    display: none;
     text-shadow: ${({theme}) => theme.selected} 3px 3px;
     font-size: 2rem;
+
+    @media (min-width: 750px) {
+      display: block;
+    }
   }
 
   img {
-    max-height: 50px;
-    max-width: 50px;
-  }
-
-  @media (min-width: 400px) {
-    strong {
-      visibility: visible;
-    }
+    min-width: 3vmax;
+    max-width: 5vmax;
+    margin: 10px;
   }
 `
 
