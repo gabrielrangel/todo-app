@@ -21,6 +21,10 @@ type UserProps = {
 const UserStyle = styled.div`
   height: 50px;
 
+  .photo > * {
+    border-radius: 100px;
+  }
+
   .dropdown {
     display: none;
   }
@@ -76,6 +80,16 @@ const HeaderStyle = styled.header`
     padding: 5px 10px;
     gap: 5px;
 
+    button {
+      padding: 0;
+      width: 50px;
+      height: 50px;
+
+      > *:not(img) {
+        padding: 10px;
+      }
+    }
+
     *:first-child {
       flex: 1;
     }
@@ -111,7 +125,7 @@ const UserInfo = ({user, logout}: UserProps) => (
 export function Header(props: HeaderProps) {
     const {user} = useAuth()
     const handleNewList = () => {
-        user &&  newRecord(user.uid, {type: "list"})
+        user && newRecord(user.uid, {type: "list"})
     }
 
     return (
