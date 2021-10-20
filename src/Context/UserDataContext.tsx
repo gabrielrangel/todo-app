@@ -1,7 +1,7 @@
 import {User} from "firebase/auth";
 import {createContext, Dispatch, ReactNode, useEffect, useReducer} from "react";
 
-import {DatabaseRecord, List, ListLoaderValReturn, listsLoader, newRecord} from "../Services/Database"
+import {DatabaseRecord, List, subscribeListeners} from "../Services/Database"
 import {useAuth} from "../Hooks/useAuth";
 
 type UserDataContextProps = {
@@ -11,7 +11,8 @@ type UserDataContextProps = {
 type State = Array<DatabaseRecord<List>>
 
 type Action = {
-    value: State
+    value: DatabaseRecord<List>,
+    type: "read" | "update" | "delete",
 }
 
 type UserDataContextValue = {
@@ -20,18 +21,21 @@ type UserDataContextValue = {
 }
 
 function reducer(state: State, action: Action) {
-    const newState = [...state]
-    const {value} = action
-    value.forEach((newListValue) => {
-        const listIndex = newState.findIndex(({ListId}) => ListId === newListValue.ListId)
-
-        if (listIndex === -1) {
-            newState.push(newListValue)
-        } else {
-            newState[listIndex] = newListValue
-        }
-    })
-    return newState
+    console.log({type: action.type, value: action.value})
+    switch (action.type) {
+        case "read":
+            return [...state, action.value]
+        case "update":
+            return state.map(
+                (record: DatabaseRecord<List>) => record.created === action.value.created ? action.value : record
+            )
+        case "delete":
+            return state.filter(
+                (record: DatabaseRecord<List>) => record.id !== action.value.id
+            )
+        default:
+            return {...state}
+    }
 }
 
 const initialState: State = []
@@ -44,18 +48,11 @@ export function UserDataContextProvider({children}: UserDataContextProps) {
 
     useEffect(() => {
         if (user && user.uid) {
-            const [unsubscribe] = listsLoader(user.uid, (snapshot) => {
-                const val: ListLoaderValReturn = snapshot.val()
-                if (val) {
-                    const parsedVal = Object.entries(val).map(([id, {title, value:todos, created}]) => {
-                        return {ListId: id, title, todos, created} as DatabaseRecord<List>
-                    })
-                    dispatch({value: parsedVal})
-                } else {
-                    newRecord(user.uid, {type: "list"})
-                }
+            return subscribeListeners(user.uid, {
+                read: (value) => dispatch({type: "read", value}),
+                update: (value) => dispatch({type: "update", value}),
+                delete: (value) => dispatch({type: "delete", value})
             })
-            return unsubscribe
         }
     }, [user, dispatch])
 

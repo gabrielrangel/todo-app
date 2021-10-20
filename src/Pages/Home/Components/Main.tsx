@@ -1,7 +1,7 @@
+import {FormEvent, useCallback} from "react";
 import styled from "styled-components";
-import {useEffect} from "react";
 
-import {deleteList, newRecord} from "../../../Services/Database";
+import {DatabaseRecord, deleteList, List, newRecord, updateList} from "../../../Services/Database";
 
 import {TiPlus, TiTrash} from "react-icons/ti"
 
@@ -74,29 +74,49 @@ const MainStyle = styled.main`
 
   @media (min-width: 1024px) {
     > * {
-      flex-basis: calc((100% - 30px) / 4);
+      flex-basis: calc((100% - 50px) / 4);
     }
   }
 `
 
 export function Main() {
-    const {state} = useUserData()
+    const {state, dispatch} = useUserData()
     const {user} = useAuth()
 
-    const handleNewTodo = (userId:string, listId:string | undefined) => {
+    const handleNewTodo = (userId: string, listId: string | undefined) => {
         listId && newRecord(userId, {type: "todo", listId})
     }
+
+    const handleEditTitle = useCallback(
+    (title: string, value: DatabaseRecord<List>) =>
+        dispatch({
+            type: "update",
+            value: {...value, title}
+        }), [dispatch]
+    )
+
+    const handleUpdateList = useCallback(
+        (userId, listId) =>
+            updateList(userId, state.filter(list => list.id === listId))
+        , [state]
+    )
 
     return (
         <MainStyle>
             {
-                state.map(({ListId, title, value}) => (
-                    <Card key={ListId}>
+                state.map((value) => (
+                    <Card key={value.id}>
                         <div>
-                            <input value={title} placeholder={"Lista"}/>
+                            <input
+                                value={value.title}
+                                placeholder={"Lista"}
+                                onChange={(e: FormEvent<HTMLInputElement>) => handleEditTitle(e.currentTarget.value, value)}
+                                onBlur={() => handleUpdateList(user?.uid, value.id)}
+                            />
                             <Button className={"danger"}
-                                    onClick={() => user && ListId && deleteList(user.uid, ListId)}><TiTrash/></Button>
-                            <Button onClick={() => user && handleNewTodo(user.uid, ListId)}><TiPlus/></Button>
+                                    onClick={() => user && value.id && deleteList(user.uid, value.id)}
+                            > <TiTrash/> </Button>
+                            <Button onClick={() => user && handleNewTodo(user.uid, value.id)}><TiPlus/></Button>
                         </div>
                     </Card>
                 ))
