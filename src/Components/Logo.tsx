@@ -1,26 +1,52 @@
 import styled from "styled-components";
-import {useTheme} from "../Hooks/useTheme";
+
+import icon from "../Assets/img/event.png"
 
 type LogoProps = {
-    isDarkMode: boolean
+    collapse?: boolean
 }
 
-const Style = styled.strong<LogoProps>`
-  font-family: "Lobster", sans-serif;
-  font-size: 5rem;
+const Style = styled.div<LogoProps>`
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  border-radius: 0;
+  padding: 10px 20px;
+  gap: 10px;
 
-  text-align: center;
+  * {
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    cursor: default;
+  }
 
-  color: ${({theme}) => theme.emphasis};
+  strong {
+    font-family: "Lato", sans-serif;
+    font-weight: 700;
+    color: ${({theme}) => theme.emphasis};
+    visibility: hidden;
+  }
 
-  grid-area: logo;
+  img {
+    max-height: 50px;
+    max-width: 50px;
+  }
+
+  @media (min-width: 400px) {
+    strong {
+      visibility: visible;
+    }
+  }
 `
 
-function Logo() {
-    const {isDarkMode} = useTheme()
-
+function Logo({collapse}: LogoProps) {
     return (
-        <Style className={"selection-none"} isDarkMode={isDarkMode}>To-do!</Style>
+        <Style>
+            <img src={icon} alt={"Ícone representando uma tarefa"}/>
+            <strong>todo!</strong>
+        </Style>
     )
 }
 

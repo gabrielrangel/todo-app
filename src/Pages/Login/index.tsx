@@ -3,7 +3,6 @@ import {FcGoogle} from "react-icons/fc"
 
 import {useAuth} from "../../Hooks/useAuth";
 
-// Components
 import Logo from "../../Components/Logo"
 import {Button, Footer, Main, Wrapper} from "./style"
 import illustration from "../../Assets/img/Wavy_Bus-03_Single-04.png"

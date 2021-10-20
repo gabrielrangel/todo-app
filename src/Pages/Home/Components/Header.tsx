@@ -1,11 +1,11 @@
-import {User} from "firebase/auth"
+import {IoMdLogOut} from "react-icons/io"
+import {MdOutlineDarkMode, MdOutlineLightMode} from "react-icons/md"
 
-import Card from "../../../Components/Card";
+import {User} from "firebase/auth"
 import styled from "styled-components";
-import {TiPlus} from "react-icons/ti"
 import {useAuth} from "../../../Hooks/useAuth";
-import Button from "../../../Components/Button";
 import {newRecord} from "../../../Services/Database";
+import {useTheme} from "../../../Hooks/useTheme";
 
 type HeaderProps = {
     title: string;
@@ -19,50 +19,25 @@ type UserProps = {
 }
 
 const UserStyle = styled.div`
-  height: 50px;
+  display: flex;
+  gap: 10px;
 
-  .photo > * {
+  img {
     border-radius: 100px;
+    height: 50px;
+    width: 50px;
   }
 
-  .dropdown {
-    display: none;
-  }
 
-  :hover .dropdown {
-    display: flex;
-    align-items: stretch;
-    width: 150px;
-    position: relative;
-    right: 100px;
-    z-index: 1;
-    gap: 5px;
-    padding: 10px 5px 5px 5px;
-
-    * {
-      font-size: 1rem;
-      width: 100%;
-    }
-
-    > *:first-child {
-      margin: 5px 0;
-      font-weight: 600;
-      text-align: center;
-    }
-  }
 `
 
 const HeaderStyle = styled.header`
   grid-area: header;
-
-  top: 20px;
-  margin: 20px;
-  align-self: stretch;
-
-  position: sticky;
-  position: -webkit-sticky;
+  padding: 10px 20px;
 
   display: flex;
+  gap: 10px;
+  justify-content: flex-end;
   align-items: center;
 
   * {
@@ -73,68 +48,47 @@ const HeaderStyle = styled.header`
     -webkit-user-select: none;
   }
 
-  > ${Card} {
-    width: 100%;
-    flex-direction: row;
+  button {
+    border: none;
+    background-color: ${({theme}) => theme.primaryColor};
+    width: 50px;
+    height: 50px;
+    display: flex;
     align-items: center;
-    padding: 5px 10px;
-    gap: 5px;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 100px;
+    transition: 1s;
 
-    button {
-      padding: 0;
-      width: 50px;
-      height: 50px;
-
-      > *:not(img) {
-        padding: 10px;
-      }
+    &, * {
+      color: ${({theme}) => theme.contrast}
     }
 
-    *:first-child {
-      flex: 1;
-    }
-
-    > *:not(:first-child) {
-      flex: 0;
-      min-width: 50px;
-      min-height: 50px;
+    :hover {
+      background-color: ${({theme}) => theme.secondaryColor};
     }
   }
-
 `
 
 const UserInfo = ({user, logout}: UserProps) => (
-    <UserStyle>
-        <Button className="photo">
-            {user.photoURL
-                ? <img src={user.photoURL} alt={user.displayName || ""}/>
-                : <div>{user.displayName ? user.displayName.charAt(0).toUpperCase() : "?"} </div>
-            }
-        </Button>
-
-        <Card className="dropdown">
-            <div>{user.displayName}</div>
-            <div>
-                <Button onClick={logout}>Sair</Button>
-            </div>
-        </Card>
-
+    user && <UserStyle>
+        <button onClick={logout}><IoMdLogOut/></button>
+        <img src={user?.photoURL || ""} alt={user?.displayName || "avatar"}/>
     </UserStyle>
 )
 
 export function Header(props: HeaderProps) {
     const {user} = useAuth()
+    const {darkModeToggle, isDarkMode} = useTheme()
+
     const handleNewList = () => {
         user && newRecord(user.uid, {type: "list"})
     }
 
     return (
         <HeaderStyle>
-            <Card>
-                <h1>{props.title}</h1>
-                <Button onClick={handleNewList}><TiPlus/></Button>
-                <UserInfo user={props.user} logout={props.logout}/>
-            </Card>
+            <button onClick={darkModeToggle}>{isDarkMode ? <MdOutlineLightMode/> : <MdOutlineDarkMode/>}</button>
+            <UserInfo user={props.user} logout={props.logout}/>
         </HeaderStyle>
     )
 }

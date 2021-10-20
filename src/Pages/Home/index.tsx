@@ -1,7 +1,7 @@
 import {useAuth} from "../../Hooks/useAuth";
 import {Redirect} from "react-router-dom";
 
-import {Footer, Wrapper} from "./style"
+import {Wrapper} from "./style"
 
 import {GrowingCard} from "./Components/GrowingCard";
 import {ListField} from "./Components/ListField";
@@ -9,6 +9,8 @@ import {Header} from "./Components/Header";
 import {Main} from "./Components/Main"
 import {UserDataContextProvider} from "../../Context/UserDataContext";
 import Logo from "../../Components/Logo";
+import {Nav} from "./Components/Nav";
+import {Footer} from "./Components/Footer";
 
 const NewTodo = () => (
     <GrowingCard alpha={"10"}>
@@ -32,6 +34,7 @@ function Home() {
                 <Wrapper>
                     <Logo/>
                     <Header title={"Todas as Listas"} user={user} logout={logout}/>
+                    <Nav/>
                     <Main/>
                     <Footer/>
                 </Wrapper>

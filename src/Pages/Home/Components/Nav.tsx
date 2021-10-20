@@ -1,32 +1,59 @@
 import styled from "styled-components";
-import Card from "../../../Components/Card";
-import Logo from "../../../Components/Logo";
 
-const NavStyle = styled.nav`
+const Style = styled.aside`
   grid-area: nav;
-  margin: 10px;
 
-  ${Card} {
-    height: 100%;
-    background-color: transparent;
+  ul {
+    margin: 20px 0;
+    display: flex;
+
+    li {
+      display: flex;
+      margin: 5px 0;
+
+      button {
+        background-color: ${({theme}) => theme.secondaryColor};
+        cursor: pointer;
+        width: 100%;
+        border: 0;
+        border-top-right-radius: 50px;
+        border-bottom-right-radius: 50px;
+        font-family: "Lato", sans-serif;
+        font-weight: 700;
+        text-align: left;
+        padding: 10px;
+        transition: 1s;
+
+        &[value="selected"] {
+          background-color: ${({theme}) => theme.selected}10;
+          cursor: default;
+        }
+
+        :not([value="selected"]):hover {
+          background-color: ${({theme}) => theme.selected}05;
+        }
+      }
+    }
   }
 
   @media (min-width: 760px) {
-    margin: 0;
-    
-    ${Card}{
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
+    ul {
+      flex-direction: column;
     }
   }
 `
 
 export function Nav() {
     return (
-        <NavStyle>
-            <Card>
-                <Logo/>
-            </Card>
-        </NavStyle>
+        <Style>
+            <ul>
+                <li>
+                    <button value={"selected"}>Listas</button>
+                </li>
+                <li>
+                    <button>Tarefas</button>
+                </li>
+            </ul>
+        </Style>
     )
 }

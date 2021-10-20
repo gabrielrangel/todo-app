@@ -16,67 +16,68 @@ const MainStyle = styled.main`
   margin: 10px;
 
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  align-content: flex-start;
-  gap: 10px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: stretch;
 
-  > * {
-    flex: 0;
-    flex-basis: 100%;
-    justify-content: center;
-  }
+  .header {
+    display: flex;
+    align-items: center;
 
-  > ${Card} {
-    padding: 20px 0;
-
-    input {
-      border: none;
-      background-color: transparent;
-
-      :focus {
-        outline: none;
-      }
+    h1 {
+      margin: 10px 0;
+      font-size: 2rem;
+      font-weight: 700;
+      flex: 1;
     }
 
     > * {
+      flex: 0 0 30px;
+    }
+
+    button {
       display: flex;
-      gap: 5px;
+      align-items: center;
+      border-radius: 100px;
+      border: none;
+      transition: 1s;
+      background-color: ${({theme}) => theme.primaryColor};
+      cursor: pointer;
+      padding: 5px;
 
-      > * {
-        flex: 0;
-      }
-
-      > *:first-child {
-        flex: 1;
-
-        margin-left: 10px;
-      }
-
-      > *:last-child {
-        margin-right: 10px;
+      :hover {
+        background-color: ${({theme}) => theme.secondaryColor};
       }
     }
   }
 
-  @media (min-width: 660px) {
+}
+
+${Card} {
+  > * {
+    display: flex;
+
+    width: 100%;
+    min-height: 30px;
+    gap: 5px;
+
     > * {
-      flex-basis: calc((100% - 10px) / 2);
+      flex: 0;
+
+    }
+
+    > *:first-child {
+      flex: 1;
+      margin: 10px 0;
     }
   }
 
-  @media (min-width: 760px) {
-    > * {
-      flex-basis: calc((100% - 20px) / 3);
-    }
+  input {
+    background-color: transparent;
+    border: none;
+    padding: 0 10px;
+    min-width: 100px;
   }
-
-  @media (min-width: 1024px) {
-    > * {
-      flex-basis: calc((100% - 50px) / 4);
-    }
-  }
+}
 `
 
 export function Main() {
@@ -88,11 +89,11 @@ export function Main() {
     }
 
     const handleEditTitle = useCallback(
-    (title: string, value: DatabaseRecord<List>) =>
-        dispatch({
-            type: "update",
-            value: {...value, title}
-        }), [dispatch]
+        (title: string, value: DatabaseRecord<List>) =>
+            dispatch({
+                type: "update",
+                value: {...value, title}
+            }), [dispatch]
     )
 
     const handleUpdateList = useCallback(
@@ -103,10 +104,14 @@ export function Main() {
 
     return (
         <MainStyle>
+            <div className="header">
+                <h1>Todas as Listas</h1>
+                <button><TiPlus/></button>
+            </div>
             {
                 state.map((value) => (
                     <Card key={value.id}>
-                        <div>
+                        <div className={"title"}>
                             <input
                                 value={value.title}
                                 placeholder={"Lista"}
