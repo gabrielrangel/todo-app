@@ -1,9 +1,10 @@
 import {FormEvent, useCallback} from "react";
 import styled from "styled-components";
 
-import {DatabaseRecord, deleteList, List, newRecord, updateList} from "../../../Services/Database";
+import {deleteList, List, newRecord, updateList} from "../../../Services/Database";
 
 import {TiPlus, TiTrash} from "react-icons/ti"
+import {MdCheck} from "react-icons/md"
 
 import {useUserData} from "../../../Hooks/useUserData";
 
@@ -29,53 +30,64 @@ const MainStyle = styled.main`
       font-weight: 700;
       flex: 1;
     }
-
-    > * {
-      flex: 0 0 30px;
-    }
-
-    button {
-      display: flex;
-      align-items: center;
-      border-radius: 100px;
-      border: none;
-      transition: 1s;
-      background-color: ${({theme}) => theme.primaryColor};
-      cursor: pointer;
-      padding: 5px;
-
-      :hover {
-        background-color: ${({theme}) => theme.secondaryColor};
-      }
-    }
   }
 
 }
 
 ${Card} {
-  > * {
+  margin: 5px 0;
+  padding: 5px 0;
+
+  > div {
     display: flex;
+    align-items: center;
 
-    width: 100%;
-    min-height: 30px;
-    gap: 5px;
+    input {
+      width: 20px;
+      height: auto;
+      flex: 1;
+      background-color: transparent;
+      padding: 10px;
+      border: none;
 
-    > * {
-      flex: 0;
-
+      :focus {
+        outline: none;
+      }
     }
 
-    > *:first-child {
-      flex: 1;
-      margin: 10px 0;
+    button {
+      margin: 10px;
+      width: 30px;
+      height: 30px;
+    }
+
+  }
+
+  .title {
+    &, * {
+      font-family: "Lato", sans-serif;
+      font-weight: 600;
+      font-size: 2rem;
     }
   }
 
-  input {
+  .todo + .todo {
+    border-top: solid 1px ${({theme}) => theme.primaryColor};
+  }
+
+  .checkbox {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    transition: 1s;
+
+    border-radius: 100px;
     background-color: transparent;
-    border: none;
-    padding: 0 10px;
-    min-width: 100px;
+    border: solid 2px ${({theme}) => theme.selected};
+
+    &[value="selected"] {
+      background-color: ${({theme}) => theme.selected};
+    }
   }
 }
 `
@@ -88,8 +100,12 @@ export function Main() {
         listId && newRecord(userId, {type: "todo", listId})
     }
 
+    const handleNewList = (userId: string) => {
+        newRecord(userId, {type: "list"})
+    }
+
     const handleEditTitle = useCallback(
-        (title: string, value: DatabaseRecord<List>) =>
+        (title: string, value: List) =>
             dispatch({
                 type: "update",
                 value: {...value, title}
@@ -106,24 +122,38 @@ export function Main() {
         <MainStyle>
             <div className="header">
                 <h1>Todas as Listas</h1>
-                <Button><TiPlus/></Button>
+                <Button onClick={() => user && handleNewList(user?.uid)}><TiPlus/></Button>
             </div>
             {
-                state.map((value) => (
-                    <Card key={value.id}>
+                state.map((list) => (
+                    <Card key={list.id} onBlur={() => handleUpdateList(user?.uid, list.id)}>
                         <div className={"title"}>
                             <input
-                                value={value.title}
+                                value={list.title}
                                 placeholder={"Lista"}
-                                onChange={(e: FormEvent<HTMLInputElement>) => handleEditTitle(e.currentTarget.value, value)}
-                                onBlur={() => handleUpdateList(user?.uid, value.id)}
+                                onChange={(e: FormEvent<HTMLInputElement>) => handleEditTitle(e.currentTarget.value, list)}
                             />
                             <Button fill={"danger"}
-                                    onClick={() => user && value.id && deleteList(user.uid, value.id)}
+                                    onClick={() => user && list.id && deleteList(user.uid, list.id)}
                             > <TiTrash/> </Button>
                             <Button fill={"emphasis"}
-                                    onClick={() => user && handleNewTodo(user.uid, value.id)}><TiPlus/></Button>
+                                    onClick={() => user && handleNewTodo(user.uid, list.id)}><TiPlus/></Button>
                         </div>
+                        {
+                            list.todos && Object.entries(list.todos).map(([_, todo]) => (
+                                <div key={todo.id} className={"todo"}>
+                                    <button
+                                        className={"checkbox"}
+                                        value={todo.done ? "selected" : ""}
+                                    >{
+                                        todo.done && <MdCheck/>
+                                    }</button>
+                                    <input
+                                        value={todo.title}
+                                        placeholder={"Tarefa"}/>
+                                </div>
+                            ))
+                        }
                     </Card>
                 ))
             }

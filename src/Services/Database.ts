@@ -7,19 +7,18 @@ const {
     remove, update
 } = database
 
-export interface DatabaseRecord<Type> {
+export interface DatabaseRecord{
     id?: string,
     title: string,
-    created: number
-    value?: Type
+    created: number,
 }
 
-interface Todo {
+export interface Todo extends DatabaseRecord{
     done: boolean
 }
 
-export interface List {
-    todos: Array<Todo>
+export interface List extends DatabaseRecord{
+    todos?: Array<Todo>
 }
 
 type NewRecordOptions = {
@@ -32,9 +31,9 @@ type NewRecordOptions = {
 }
 
 type ListenersHandlers = {
-    read: (value: DatabaseRecord<List>) => void,
-    update: (value: DatabaseRecord<List>) => void,
-    delete: (value: DatabaseRecord<List>) => void,
+    read: (value: List) => void,
+    update: (value: List) => void,
+    delete: (value: List) => void,
 }
 
 export function subscribeListeners(userId: string, handlers: ListenersHandlers) {
@@ -52,14 +51,14 @@ export function subscribeListeners(userId: string, handlers: ListenersHandlers) 
 }
 
 export function newRecord(userId: string, {type, listId, title = "", todos = [], done = false}: NewRecordOptions) {
-    const value = type === "list" ? {todos} as List : {done} as Todo
-    const record: DatabaseRecord<typeof value> = {
-        title, created: Date.now(), value
-    }
+    const record = {title, created: Date.now()} as DatabaseRecord
+    const value = type === "list"
+        ? {...record, todos} as List
+        : {...record, done} as Todo
 
     const db = getDatabase()
     const recordRef = ref(db, `users/${userId}/lists${type === 'todo' ? `/${listId}/todos` : ""}`)
-    return push(recordRef, record)
+    return push(recordRef, value)
 }
 
 export async function deleteList(userId: string, listId: string) {
@@ -68,9 +67,9 @@ export async function deleteList(userId: string, listId: string) {
     remove(listRef)
 }
 
-export function updateList(userId: string, [{id, ...value}]: DatabaseRecord<List>[]) {
+export function updateList(userId: string, [{id, ...value}]: List[]) {
     const db = getDatabase()
-    const updates = {} as Record<any, DatabaseRecord<List>>
+    const updates = {} as Record<string, List>
     updates[`users/${userId}/lists/${id}`] = value
     update(ref(db), updates)
 }

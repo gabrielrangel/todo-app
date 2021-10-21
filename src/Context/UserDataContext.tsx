@@ -1,17 +1,17 @@
 import {User} from "firebase/auth";
 import {createContext, Dispatch, ReactNode, useEffect, useReducer} from "react";
 
-import {DatabaseRecord, List, subscribeListeners} from "../Services/Database"
+import {List, subscribeListeners} from "../Services/Database"
 import {useAuth} from "../Hooks/useAuth";
 
 type UserDataContextProps = {
     children: ReactNode,
     user: User | null
 }
-type State = Array<DatabaseRecord<List>>
+type State = Array<List>
 
 type Action = {
-    value: DatabaseRecord<List>,
+    value: List,
     type: "read" | "update" | "delete",
 }
 
@@ -21,17 +21,16 @@ type UserDataContextValue = {
 }
 
 function reducer(state: State, action: Action) {
-    console.log({type: action.type, value: action.value})
     switch (action.type) {
         case "read":
             return [...state, action.value]
         case "update":
             return state.map(
-                (record: DatabaseRecord<List>) => record.created === action.value.created ? action.value : record
+                (record: List) => record.created === action.value.created ? action.value : record
             )
         case "delete":
             return state.filter(
-                (record: DatabaseRecord<List>) => record.id !== action.value.id
+                (record: List) => record.id !== action.value.id
             )
         default:
             return {...state}

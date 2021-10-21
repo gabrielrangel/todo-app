@@ -10,7 +10,7 @@ export default styled.button<ButtonProps>`
   align-items: center;
   justify-content: center;
   align-content: center;
-  
+
   min-width: 2vmax;
   min-height: 2vmax;
 
@@ -18,12 +18,16 @@ export default styled.button<ButtonProps>`
   border-radius: 100px;
 
   background-color: ${({fill, theme}) => fill && theme[fill] || theme.primaryColor};
+  padding: 5px;
+
+  & * {
+    color: ${({theme, fill}) => !fill || fill === "primaryColor" ? theme.contrast : "white"};
+  }
 
   span {
     font-family: "Lato", sans-serif;
     font-weight: 700;
     text-align: left;
-    color: ${({theme, fill}) => !fill || fill === "primaryColor" ? theme.contrast : "white"};
   }
 
   cursor: pointer;
