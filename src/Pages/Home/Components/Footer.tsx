@@ -7,8 +7,11 @@ const Style = styled.footer`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 10vh 0 5vh 0;
 
   &, * {
+    font-weight: 400;
+    color: ${({theme}) => theme.contrast}99;
     cursor: default;
     font-size: .8rem;
     vertical-align: center;

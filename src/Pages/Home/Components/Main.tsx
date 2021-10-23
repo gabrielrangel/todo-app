@@ -15,15 +15,24 @@ import {useAuth} from "../../../Hooks/useAuth";
 const MainStyle = styled.main`
   grid-area: main;
   margin: 10px;
+  min-height: calc(100vh - 110px);
 
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  align-content: flex-start;
+  justify-content: center;
 
   .header {
     display: flex;
     align-items: center;
     width: 100%;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 86px;
+    background-color: ${({theme}) => theme.primaryColor}EE;
+    padding: 10px;
+
 
     h1 {
       margin: 10px 0;

@@ -12,6 +12,12 @@ const Style = styled.aside`
     display: flex;
     flex-direction: column;
 
+    position: sticky;
+    position: -webkit-sticky;
+    top: 86px;
+
+    background-color: ${({theme}) => theme.primaryColor}EE;
+
     li {
       display: flex;
       margin: 5px 0;

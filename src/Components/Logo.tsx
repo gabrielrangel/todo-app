@@ -2,11 +2,7 @@ import styled from "styled-components";
 
 import icon from "../Assets/img/event.png"
 
-type LogoProps = {
-    collapse?: boolean
-}
-
-const Style = styled.div<LogoProps>`
+const Style = styled.div`
   flex-direction: row;
   display: flex;
   align-items: center;
@@ -48,9 +44,9 @@ const Style = styled.div<LogoProps>`
   }
 `
 
-function Logo({collapse}: LogoProps) {
+function Logo() {
     return (
-        <Style>
+        <Style className={"logo"}>
             <img src={icon} alt={"Ícone representando uma tarefa"}/>
             <strong>todo!</strong>
         </Style>
