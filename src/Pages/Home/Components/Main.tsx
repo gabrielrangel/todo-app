@@ -17,12 +17,13 @@ const MainStyle = styled.main`
   margin: 10px;
 
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 10px;
 
   .header {
     display: flex;
     align-items: center;
+    width: 100%;
 
     h1 {
       margin: 10px 0;
@@ -31,12 +32,24 @@ const MainStyle = styled.main`
       flex: 1;
     }
   }
-
 }
 
 ${Card} {
-  margin: 5px 0;
   padding: 5px 0;
+  width: 100%;
+  height: auto;
+  transition: 1s;
+
+  @media (min-width: 730px) {
+    max-width: calc(100% / 2 - 10px);
+  }
+  @media (min-width: 1024px) {
+    max-width: calc(100% / 3 - 20px);
+  }
+
+  :hover {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
 
   > div {
     display: flex;
@@ -53,6 +66,10 @@ ${Card} {
       :focus {
         outline: none;
       }
+
+      ::placeholder {
+        color: ${({theme}) => theme.contrast}88;
+      }
     }
 
     button {
@@ -68,6 +85,14 @@ ${Card} {
       font-family: "Lato", sans-serif;
       font-weight: 600;
       font-size: 2rem;
+    }
+  }
+
+  .todo {
+    transition: 1s;
+
+    :hover {
+      background-color: ${({theme}) => theme.contrast}10;
     }
   }
 

@@ -18,7 +18,7 @@ export interface Todo extends DatabaseRecord{
 }
 
 export interface List extends DatabaseRecord{
-    todos?: Array<Todo>
+    todos?: Record<string, Todo>
 }
 
 type NewRecordOptions = {
@@ -26,7 +26,7 @@ type NewRecordOptions = {
     todoId?: string,
     type: "todo" | "list",
     title?: string,
-    todos?: Array<Todo>,
+    todos?: Record<string, Todo>,
     done?: boolean,
 }
 
@@ -50,7 +50,7 @@ export function subscribeListeners(userId: string, handlers: ListenersHandlers) 
     return () => off(listsRef)
 }
 
-export function newRecord(userId: string, {type, listId, title = "", todos = [], done = false}: NewRecordOptions) {
+export function newRecord(userId: string, {type, listId, title = "", todos = {}, done = false}: NewRecordOptions) {
     const record = {title, created: Date.now()} as DatabaseRecord
     const value = type === "list"
         ? {...record, todos} as List
