@@ -1,7 +1,7 @@
 import {User} from "firebase/auth";
 import {createContext, Dispatch, ReactNode, useEffect, useReducer} from "react";
 
-import {List, subscribeListeners} from "../Services/Database"
+import {List, subscribeListeners, Todo} from "../Services/Database"
 import {useAuth} from "../Hooks/useAuth";
 
 type UserDataContextProps = {
@@ -11,7 +11,7 @@ type UserDataContextProps = {
 type State = Array<List>
 
 type Action = {
-    value: List,
+    value: List
     type: "read" | "update" | "delete",
 }
 
@@ -23,17 +23,32 @@ type UserDataContextValue = {
 function reducer(state: State, action: Action) {
     switch (action.type) {
         case "read":
-            return [...state, action.value]
+
+            let {todos, ...list} = action.value
+            const newList: List = {...list}
+
+            todos = typeof todos === 'object' ? todos : {}
+
+            newList.todos = Object.entries(todos as Record<string, Todo>).map(
+                ([id, todo])=>{ return {...todo, id} as Todo})
+
+            return [...state, newList]
+
         case "update":
+
             return state.map(
                 (record: List) => record.created === action.value.created ? action.value : record
             )
+
         case "delete":
+
             return state.filter(
                 (record: List) => record.id !== action.value.id
             )
+
         default:
-            return {...state}
+            
+            return state
     }
 }
 

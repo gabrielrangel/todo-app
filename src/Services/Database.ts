@@ -8,7 +8,7 @@ const {
 } = database
 
 export interface DatabaseRecord{
-    id?: string,
+    id: string,
     title: string,
     created: number,
 }
@@ -18,7 +18,7 @@ export interface Todo extends DatabaseRecord{
 }
 
 export interface List extends DatabaseRecord{
-    todos?: Record<string, Todo>
+    todos?: Todo[] | Record<string, Todo>
 }
 
 type NewRecordOptions = {
@@ -69,7 +69,7 @@ export async function deleteList(userId: string, listId: string) {
 
 export function updateList(userId: string, [{id, ...value}]: List[]) {
     const db = getDatabase()
-    const updates = {} as Record<string, List>
+    const updates = {} as Record<string, object>
     updates[`users/${userId}/lists/${id}`] = value
     update(ref(db), updates)
 }
