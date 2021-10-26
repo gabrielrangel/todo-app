@@ -1,16 +1,21 @@
-import {FormEvent, useCallback} from "react";
+import { FormEvent, useCallback } from "react";
 import styled from "styled-components";
 
-import {deleteList, List, newRecord, updateList} from "../../../Services/Database";
+import {
+  deleteList,
+  List,
+  newRecord,
+  updateList,
+} from "../../../Services/Database";
 
-import {TiPlus, TiTrash} from "react-icons/ti"
-import {MdCheck} from "react-icons/md"
+import { TiPlus, TiTrash } from "react-icons/ti";
+import { MdCheck } from "react-icons/md";
 
-import {useUserData} from "../../../Hooks/useUserData";
+import { useUserData } from "../../../Hooks/useUserData";
 
 import Card from "../../../Components/Card";
 import Button from "../../../Components/Button";
-import {useAuth} from "../../../Hooks/useAuth";
+import { useAuth } from "../../../Hooks/useAuth";
 
 const MainStyle = styled.main`
   grid-area: main;
@@ -30,7 +35,7 @@ const MainStyle = styled.main`
     position: sticky;
     position: -webkit-sticky;
     top: 86px;
-    background-color: ${({theme}) => theme.primaryColor}EE;
+    background-color: ${({ theme }) => theme.primaryColor}EE;
     padding: 10px;
 
 
@@ -77,7 +82,7 @@ ${Card} {
       }
 
       ::placeholder {
-        color: ${({theme}) => theme.contrast}88;
+        color: ${({ theme }) => theme.contrast}88;
       }
     }
 
@@ -101,12 +106,12 @@ ${Card} {
     transition: 1s;
 
     :hover {
-      background-color: ${({theme}) => theme.contrast}10;
+      background-color: ${({ theme }) => theme.contrast}10;
     }
   }
 
   .todo + .todo {
-    border-top: solid 1px ${({theme}) => theme.primaryColor};
+    border-top: solid 1px ${({ theme }) => theme.primaryColor};
   }
 
   .checkbox {
@@ -117,80 +122,124 @@ ${Card} {
 
     border-radius: 100px;
     background-color: transparent;
-    border: solid 2px ${({theme}) => theme.selected};
+    border: solid 2px ${({ theme }) => theme.selected};
 
     &[value="selected"] {
-      background-color: ${({theme}) => theme.selected};
+      background-color: ${({ theme }) => theme.selected};
     }
   }
 }
-`
+`;
 
 export function Main() {
-    const {state, dispatch} = useUserData()
-    const {user} = useAuth()
+  const { state, dispatch } = useUserData();
+  const { user } = useAuth();
 
-    const handleNewTodo = (userId: string, listId: string | undefined) => {
-        listId && newRecord(userId, {type: "todo", listId})
-    }
+  const handleNewTodo = (userId: string, listId: string | undefined) => {
+    listId && newRecord(userId, { type: "todo", listId });
+  };
 
-    const handleNewList = (userId: string) => {
-        newRecord(userId, {type: "list"})
-    }
+  const handleNewList = (userId: string) => {
+    newRecord(userId, { type: "list" });
+  };
 
-    const handleEditTitle = useCallback(
-        (title: string, value: List) =>
-            dispatch({
-                type: "update",
-                value: {...value, title}
-            }), [dispatch]
-    )
+  const handleEditListTitle = useCallback(
+    (title: string, value: List) =>
+      dispatch({
+        type: "update",
+        value: { ...value, title },
+      }),
+    [dispatch]
+  );
 
-    const handleUpdateList = useCallback(
-        (userId, listId) =>
-            updateList(userId, state.filter(list => list.id === listId))
-        , [state]
-    )
+  const handleEditTodoTitle = useCallback(
+    (list: List, todoIndex: number, title: string) => {
+      const value = { ...list } as List;
+      if (Array.isArray(value.todos)) {
+        value.todos[todoIndex].title = title;
+        dispatch({ type: "update", value });
+      }
+    },
+    [dispatch]
+  );
 
-    return (
-        <MainStyle>
-            <div className="header">
-                <h1>Todas as Listas</h1>
-                <Button onClick={() => user && handleNewList(user?.uid)}><TiPlus/></Button>
-            </div>
-            {
-                state.map((list) => (
-                    <Card key={list.id} onBlur={() => handleUpdateList(user?.uid, list.id)}>
-                        <div className={"title"}>
-                            <input
-                                value={list.title}
-                                placeholder={"Lista"}
-                                onChange={(e: FormEvent<HTMLInputElement>) => handleEditTitle(e.currentTarget.value, list)}
-                            />
-                            <Button fill={"danger"}
-                                    onClick={() => user && list.id && deleteList(user.uid, list.id)}
-                            > <TiTrash/> </Button>
-                            <Button fill={"emphasis"}
-                                    onClick={() => user && handleNewTodo(user.uid, list.id)}><TiPlus/></Button>
-                        </div>
-                        {
-                            list.todos && Object.entries(list.todos).map(([_, todo]) => (
-                                <div key={todo.id} className={"todo"}>
-                                    <button
-                                        className={"checkbox"}
-                                        value={todo.done ? "selected" : ""}
-                                    >{
-                                        todo.done && <MdCheck/>
-                                    }</button>
-                                    <input
-                                        value={todo.title}
-                                        placeholder={"Tarefa"}/>
-                                </div>
-                            ))
-                        }
-                    </Card>
-                ))
-            }
-        </MainStyle>
-    )
+  const handleUpdateList = useCallback(
+    (userId, listId) =>
+      updateList(
+        userId,
+        state.filter((list) => list.id === listId)
+      ),
+    [state]
+  );
+
+  const checkboxToggle = useCallback(
+    (list: List, todoIndex: number) => {
+      const value = { ...list } as List;
+      if (Array.isArray(value.todos)) {
+        value.todos[todoIndex].done = !value.todos[todoIndex].done;
+        dispatch({ type: "update", value });
+      }
+    },
+    [dispatch]
+  );
+
+  return (
+    <MainStyle>
+      <div className="header">
+        <h1>Todas as Listas</h1>
+        <Button onClick={() => user && handleNewList(user?.uid)}>
+          <TiPlus />
+        </Button>
+      </div>
+      {state.map((list, listIndex) => (
+        <Card
+          key={`l${listIndex}`}
+          onBlur={() => handleUpdateList(user?.uid, list.id)}
+        >
+          <div className={"title"}>
+            <input
+              value={list.title}
+              placeholder={"Lista"}
+              onChange={(e: FormEvent<HTMLInputElement>) =>
+                handleEditListTitle(e.currentTarget.value, list)
+              }
+            />
+            <Button
+              fill={"danger"}
+              onClick={() => user && list.id && deleteList(user.uid, list.id)}
+            >
+              {" "}
+              <TiTrash />{" "}
+            </Button>
+            <Button
+              fill={"emphasis"}
+              onClick={() => user && handleNewTodo(user.uid, list.id)}
+            >
+              <TiPlus />
+            </Button>
+          </div>
+          {Array.isArray(list.todos) &&
+            list.todos.map((todo, todoIndex) => (
+              <div className="todo" key={`${listIndex}${todoIndex}`}>
+                <button
+                  className={"checkbox"}
+                  value={todo.done ? "selected" : ""}
+                  onClick={() => checkboxToggle(list, todoIndex)}
+                >
+                  {todo.done && <MdCheck />}
+                </button>
+
+                <input
+                  value={todo.title}
+                  placeholder={"Tarefa"}
+                  onChange={(e: FormEvent<HTMLInputElement>) =>
+                    handleEditTodoTitle(list, todoIndex, e.currentTarget.value)
+                  }
+                />
+              </div>
+            ))}
+        </Card>
+      ))}
+    </MainStyle>
+  );
 }
